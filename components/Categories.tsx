@@ -1,5 +1,6 @@
 import { bill, vehicle, mall, rail } from "@/assets";
 import Image from "next/image";
+import Link from "next/link";
 
 const Categories = () => {
 	const categories = [
@@ -38,9 +39,11 @@ const Categories = () => {
 						across various categories
 					</p>
 				</div>
-				<p className='text-primary-purple font-medium cursor-pointer hover:underline'>
-					See all
-				</p>
+			<Link href={'/categories'}>
+					<p className='text-primary-purple font-medium cursor-pointer hover:underline'>
+						See all
+					</p>
+			</Link>
 			</div>
 
 			{/* Categories Grid */}

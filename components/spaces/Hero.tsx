@@ -1,12 +1,12 @@
-import { heroBg } from "@/assets";
+import { mall } from "@/assets";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
 const Hero = () => {
 	return (
-		<div className='relative w-full min-h-screen p-4 md:p-0 md:h-[800px] overflow-hidden'>
+		<div className='relative w-full h-auto p-4 md:p-0 md:h-[800px] overflow-hidden'>
 			<Image
-				src={heroBg}
+				src={mall}
 				alt='Hero Background'
 				priority
 				fill
@@ -20,7 +20,7 @@ const Hero = () => {
 			<div className='relative z-10 flex items-center justify-center h-full px-4'>
 				<div className='flex flex-col gap-6 text-white items-center max-w-5xl mx-auto text-center'>
 					<h1 className='text-3xl md:text-5xl font-bold leading-snug max-w-2xl'>
-						Browse Spaces by Categories
+						Find the Perfect Advertising Space for Your Brand
 					</h1>
 					<p className='text-base md:text-xl max-w-xl font-light leading-tight text-gray-200'>
 						Browse billboards, vehicles, and digital screens available

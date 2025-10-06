@@ -1,6 +1,8 @@
 import Categories from "@/components/Categories";
+import Clients from "@/components/Clients";
 import Hero from "@/components/Hero";
 import ListSpace from "@/components/ListSpace";
+import Reviews from "@/components/Reviews";
 
 const page = () => {
 	return (
@@ -8,6 +10,8 @@ const page = () => {
 			<Hero />
 			<Categories />
 			<ListSpace />
+			<Clients />
+			<Reviews />
 		</div>
 	);
 };
