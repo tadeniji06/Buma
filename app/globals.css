@@ -3,11 +3,26 @@
 
 @theme {
 	--color-primary-purple: #5936d2;
- --color-dark: #010101;
+	--color-dark: #010101;
 }
 
 body {
 	font-family: "Inter", sans-serif;
+}
+
+@keyframes popIn {
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.animate-popIn {
+	animation: popIn 0.25s ease-out forwards;
 }
 
 /* Custom scroll bar */

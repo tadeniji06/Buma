@@ -13,6 +13,7 @@ import gpc from "./gpc.png";
 import mobil from "./mobil.png";
 import scm from "./scm.png";
 import maybrands from "./may.png";
+import auth from "./auth.png";
 export {
 	logo,
 	footBg,
@@ -28,5 +29,6 @@ export {
 	gpc,
 	mobil,
 	scm,
-	maybrands
+	maybrands,
+	auth,
 };

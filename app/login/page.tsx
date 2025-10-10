@@ -1,6 +1,10 @@
+import Login from "@/components/auth/Login";
+
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
-export default page
+	return (
+		<div>
+			<Login />
+		</div>
+	);
+};
+export default page;
