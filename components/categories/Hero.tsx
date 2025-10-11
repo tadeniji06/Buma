@@ -18,7 +18,7 @@ const Hero = () => {
 	}, []);
 
 	return (
-		<div className='relative w-full h-[500px] p-4 md:p-0 md:h-[800px] overflow-hidden'>
+		<div className='relative w-full h-auto p-4 md:p-0 md:h-[800px] overflow-hidden'>
 			<Image
 				src={heroBg}
 				alt='Hero Background'
