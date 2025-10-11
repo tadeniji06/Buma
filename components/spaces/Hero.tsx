@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Hero = () => {
 	return (
-		<div className='relative w-full h-auto p-4 md:p-0 md:h-[800px] overflow-hidden'>
+		<div className='relative w-full h-auto p-4 md:p-0 md:h-[600px] overflow-hidden'>
 			<Image
 				src={mall}
 				alt='Hero Background'
@@ -63,7 +63,7 @@ const Hero = () => {
 						</div>
 
 						{/* Budget */}
-						<div className='flex flex-col gap-2 flex-1'>
+						{/* <div className='flex flex-col gap-2 flex-1'>
 							<label className='text-sm font-medium text-gray-700'>
 								Budget Range
 							</label>
@@ -78,7 +78,7 @@ const Hero = () => {
 									placeholder='$1000 - $5000'
 								/>
 							</div>
-						</div>
+						</div> */}
 
 						{/* Search Button */}
 						<div className='flex w-full md:w-auto'>

@@ -7,16 +7,16 @@ export const headerLinks = [
 		title: "Categories",
 		link: "/categories",
 	},
-	{
-		title: "Browse Spaces",
-		link: "spaces",
-	},
+	// {
+	// 	title: "Browse Spaces",
+	// 	link: "spaces",
+	// },
 	{
 		title: "How it works",
 		link: "/tutorial",
 	},
-	{
-		title: "Login",
-		link: "/login",
-	},
+	// {
+	// 	title: "Login",
+	// 	link: "/login",
+	// },
 ];
