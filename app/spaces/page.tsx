@@ -1,11 +1,11 @@
-import Spaces from "@/components/Spaces";
+// import Spaces from "@/components/Spaces";
 import Hero from "@/components/spaces/Hero";
 
 const page = () => {
 	return (
 		<div>
 			<Hero />
-			<Spaces />
+			{/* <Spaces /> */}
 		</div>
 	);
 };
