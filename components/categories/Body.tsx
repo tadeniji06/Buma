@@ -93,7 +93,7 @@ const Body = () => {
 									b.area || "unknown area"
 								} (${b.size || "N/A"})`
 							);
-							const whatsappUrl = `https://wa.me/2349132828613?text=${message}`;
+							const whatsappUrl = `https://wa.me/2348064968725?text=${message}`;
 
 							return (
 								<div
