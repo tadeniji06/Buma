@@ -4,7 +4,7 @@ import Hero from "@/components/Hero";
 import ListSpace from "@/components/ListSpace";
 import Reviews from "@/components/Reviews";
 
-const page = () => {
+const Page = () => {
 	return (
 		<div className='min-h-screen'>
 			<Hero />
@@ -15,4 +15,5 @@ const page = () => {
 		</div>
 	);
 };
-export default page;
+
+export default Page;

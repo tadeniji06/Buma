@@ -4,17 +4,20 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { useState } from "react";
 
-const Hero = () => {
+interface HeroProps {
+	onSearch?: (location: string) => void;
+}
+
+const Hero = ({ onSearch }: HeroProps) => {
 	const [location, setLocation] = useState("");
-	const [category, setCategory] = useState("");
 
 	const handleSearch = () => {
-		// TODO: integrate query-based filtering later
-		console.log({ location, category });
+		if (!onSearch) return;
+		onSearch(location.trim().toLowerCase());
 	};
 
 	return (
-		<section className='relative w-full h-auto p-4 md:p-0 md:h-[800px] overflow-hidden'>
+		<section className='relative w-full h-auto p-4 md:p-0 md:h-[700px] overflow-hidden'>
 			<Image
 				src={heroBg}
 				alt='Hero Background'
@@ -26,21 +29,19 @@ const Hero = () => {
 			<div className='absolute inset-0 bg-black/70' />
 
 			<div className='relative z-10 flex items-center justify-center h-full px-4'>
-				<div className='flex flex-col gap-6 text-white items-center max-w-5xl mx-auto text-center'>
-					<h1 className='text-3xl md:text-5xl font-bold leading-snug max-w-2xl'>
-						Find the Perfect Advertising Space for Your Brand
+				<div className='flex flex-col gap-6 text-white items-center max-w-3xl mx-auto text-center'>
+					<h1 className='text-3xl md:text-5xl font-bold leading-snug'>
+						Find the Perfect Billboard for Your Brand
 					</h1>
-					<p className='text-base md:text-xl max-w-xl font-light leading-tight text-gray-200'>
-						Browse billboards, vehicles, and digital screens available
-						for your next campaign.
-					</p>
-
-					{/* Search Bar */}
-					<div className='w-full p-5 bg-white rounded-2xl shadow-xl flex flex-col gap-4 md:flex-row md:items-end md:gap-6'>
-						{/* Location */}
+					{/* <p className='text-base md:text-lg text-gray-200 font-light'>
+						Search by location and explore available outdoor
+						advertising spaces.
+					</p> */}
+{/* 
+					<div className='w-full p-5 bg-white rounded-2xl shadow-xl flex flex-col gap-4 md:flex-row md:items-end md:gap-4'>
 						<div className='flex flex-col gap-2 flex-1'>
 							<label className='text-sm font-medium text-gray-700'>
-								Enter Location
+								Search by Location
 							</label>
 							<div className='flex items-center border rounded-xl px-3 py-2 gap-3 text-gray-600 bg-gray-50'>
 								<Icon
@@ -50,42 +51,25 @@ const Hero = () => {
 								<input
 									className='flex-1 bg-transparent outline-none text-sm'
 									type='text'
-									placeholder='e.g. Lagos, Nigeria'
+									placeholder='e.g. Lekki, Lagos'
 									value={location}
 									onChange={(e) => setLocation(e.target.value)}
+									onKeyDown={(e) =>
+										e.key === "Enter" && handleSearch()
+									}
 								/>
 							</div>
 						</div>
 
-						{/* Category */}
-						<div className='flex flex-col gap-2 flex-1'>
-							<label className='text-sm font-medium text-gray-700'>
-								Select Category
-							</label>
-							<div className='flex items-center border rounded-xl px-3 py-2 gap-3 text-gray-600 bg-gray-50'>
-								<select
-									className='flex-1 bg-transparent outline-none text-sm'
-									value={category}
-									onChange={(e) => setCategory(e.target.value)}
-								>
-									<option value=''>Choose a category</option>
-									<option value='billboard'>Billboard</option>
-									<option value='vehicle'>Vehicle</option>
-									<option value='digital'>Digital Screen</option>
-								</select>
-							</div>
-						</div>
-
-						{/* Search Button */}
 						<div className='flex w-full md:w-auto'>
 							<button
 								onClick={handleSearch}
-								className='w-full md:w-auto bg-primary-purple text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-purple/90 transition-colors'
+								className='w-full bg-primary-purple text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-purple/90 transition-colors'
 							>
 								Search
 							</button>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</section>
