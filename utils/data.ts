@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const headerLinks = [
 	{
 		title: "Home",
@@ -6,6 +8,10 @@ export const headerLinks = [
 	{
 		title: "Categories",
 		link: "/categories",
+	},
+	{
+		title: "Blog",
+		link: "/blog",	
 	},
 	// {
 	// 	title: "Browse Spaces",
