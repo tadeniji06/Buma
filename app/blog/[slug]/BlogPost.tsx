@@ -40,7 +40,7 @@ const PortableText = ({ content }: { content: any[] }) => {
 									<a
 										key={childIndex}
 										href={markDef.href}
-										className='text-primary-orange hover:underline'
+										className='text-primary-yellow hover:underline'
 										target={markDef.blank ? "_blank" : "_self"}
 										rel={markDef.blank ? "noopener noreferrer" : ""}
 									>
@@ -94,7 +94,7 @@ const PortableText = ({ content }: { content: any[] }) => {
 				return (
 					<blockquote
 						key={index}
-						className='border-l-4 border-primary-ortext-primary-orange pl-4 my-6 italic text-gray-700'
+						className='border-l-4 border-bold-blue text-primary-yellow pl-4 my-6 italic'
 					>
 						{renderChildren(children)}
 					</blockquote>
@@ -178,7 +178,7 @@ const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 				<div className='container mx-auto px-4 py-4'>
 					<Link
 						href='/blog'
-						className='inline-flex items-center gap-2 text-gray-600 hover:text-primary-orange transition-colors duration-200'
+						className='inline-flex items-center gap-2 text-gray-600 hover:text-primary-yellow transition-colors duration-200'
 					>
 						<ArrowLeftIcon className='w-4 h-4' />
 						Back to Blog
@@ -195,7 +195,7 @@ const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 							{post.categories.map((category) => (
 								<span
 									key={category._id}
-									className='px-3 py-1 bg-primary-ortext-primary-orange/10 text-primary-orange text-sm rounded-full font-medium'
+									className='px-3 py-1 bg-primary-ortext-primary-yellow/10 text-primary-yellow text-sm rounded-full font-medium'
 								>
 									{category.title}
 								</span>
@@ -325,7 +325,7 @@ const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 												className='object-cover group-hover:scale-105 transition-transform duration-300'
 											/>
 										) : (
-											<div className='w-full h-full bg-gradient-to-br from-[#4e1803f0] to-primary-ortext-primary-orange flex items-center justify-center'>
+											<div className='w-full h-full bg-gradient-to-br from-[#4e1803f0] to-primary-ortext-primary-yellow flex items-center justify-center'>
 												<span className='text-white text-lg font-bold'>
 													E360
 												</span>
@@ -333,7 +333,7 @@ const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 										)}
 									</div>
 									<div className='p-4'>
-										<h3 className='font-bold text-gray-900 mb-2 group-hover:text-primary-orange transition-colors duration-200 line-clamp-2'>
+										<h3 className='font-bold text-gray-900 mb-2 group-hover:text-primary-yellow transition-colors duration-200 line-clamp-2'>
 											{relatedPost.title}
 										</h3>
 										<div className='flex items-center text-sm text-gray-600 gap-3'>
