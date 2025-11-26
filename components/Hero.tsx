@@ -33,43 +33,6 @@ const Hero = ({ onSearch }: HeroProps) => {
 					<h1 className='text-3xl md:text-5xl font-bold leading-snug'>
 						Find the Perfect Billboard for Your Brand
 					</h1>
-					{/* <p className='text-base md:text-lg text-gray-200 font-light'>
-						Search by location and explore available outdoor
-						advertising spaces.
-					</p> */}
-{/* 
-					<div className='w-full p-5 bg-white rounded-2xl shadow-xl flex flex-col gap-4 md:flex-row md:items-end md:gap-4'>
-						<div className='flex flex-col gap-2 flex-1'>
-							<label className='text-sm font-medium text-gray-700'>
-								Search by Location
-							</label>
-							<div className='flex items-center border rounded-xl px-3 py-2 gap-3 text-gray-600 bg-gray-50'>
-								<Icon
-									icon='mdi:location'
-									className='text-xl text-gray-500'
-								/>
-								<input
-									className='flex-1 bg-transparent outline-none text-sm'
-									type='text'
-									placeholder='e.g. Lekki, Lagos'
-									value={location}
-									onChange={(e) => setLocation(e.target.value)}
-									onKeyDown={(e) =>
-										e.key === "Enter" && handleSearch()
-									}
-								/>
-							</div>
-						</div>
-
-						<div className='flex w-full md:w-auto'>
-							<button
-								onClick={handleSearch}
-								className='w-full bg-primary-purple text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-purple/90 transition-colors'
-							>
-								Search
-							</button>
-						</div>
-					</div> */}
 				</div>
 			</div>
 		</section>

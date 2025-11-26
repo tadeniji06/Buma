@@ -15,22 +15,22 @@ export async function generateMetadata({
 
 	if (!post) {
 		return {
-			title: "Post Not Found | M360 Blog",
-			description: "This blog post could not be found on M360.",
+			title: "Blog",
+			description: "This blog post could not be found.",
 		};
 	}
 
 	const description =
 		post.body?.[0]?.children?.[0]?.text?.slice(0, 160) ||
-		`Read ${post.title} on M360 Blog and learn strategies for business growth.`;
+		`Read ${post.title} on our  Blog and learn strategies for business growth.`;
 
 	return {
-		title: `${post.title} | Explore360 Blog`,
+		title: `${post.title} | Buma Blog`,
 		description,
 		openGraph: {
 			title: post.title,
 			description,
-			url: `https://m360solutionsgroup.com/blog/${slug}`,
+			url: `https://mybuma.com/blog/${slug}`,
 			images: post.mainImage
 				? [
 						{

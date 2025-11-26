@@ -8,11 +8,6 @@ import {
 	ClockIcon,
 	UserIcon,
 	ArrowLeftIcon,
-	ShareIcon,
-	TwitterIcon,
-	FacebookIcon,
-	LinkedinIcon,
-	LinkIcon,
 } from "lucide-react";
 import { useState } from "react";
 
