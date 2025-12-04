@@ -15,22 +15,22 @@ export async function generateMetadata({
 
 	if (!post) {
 		return {
-			title: "Post Not Found | Tech360 Blog",
-			description: "This blog post could not be found on T360.",
+			title: "Post Not Found | Buma Blog",
+			description: "This blog post could not be found on Buma.",
 		};
 	}
 
 	const description =
 		post.body?.[0]?.children?.[0]?.text?.slice(0, 160) ||
-		`Read ${post.title} on T360 Blog and learn strategies for business growth.`;
+		`Read ${post.title} on Buma Blog and learn strategies for business growth.`;
 
 	return {
-		title: `${post.title} | Tech360 Blog`,
+		title: `${post.title} | Buma Blog`,
 		description,
 		openGraph: {
 			title: post.title,
 			description,
-			url: `https://tech360online.com/blog/${slug}`,
+			url: `https://www.mybuma.com/blog/${slug}`,
 			images: post.mainImage
 				? [
 						{
