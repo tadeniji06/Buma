@@ -23,7 +23,7 @@ const BlogPostsClient = () => {
 	const [loadingMore, setLoadingMore] = useState(false);
 	const [offset, setOffset] = useState(0);
 	const [hasMore, setHasMore] = useState(true);
-	const POSTS_PER_PAGE = 6;
+	const POSTS_PER_PAGE = 90;
 
 	useEffect(() => {
 		const fetchInitialData = async () => {
