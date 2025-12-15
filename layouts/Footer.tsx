@@ -91,7 +91,7 @@ const Footer = () => {
 								/>
 								<div>
 									<p className='text-sm text-gray-300 leading-relaxed'>
-										426a oluwadamilola fasade str omole phase 1, Lagos
+										426a Oluwadamilola Fashade Street Omole Phase 1, Lagos
 									</p>
 								</div>
 							</div>
