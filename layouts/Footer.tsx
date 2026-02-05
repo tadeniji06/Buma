@@ -40,7 +40,7 @@ const Footer = () => {
 									<li key={index}>
 										<Link
 											href={link.link}
-											className='text-gray-300 hover:text-dark transition-colors duration-200 text-sm'
+											className='text-gray-300 hover:text-primary-purple-light transition-colors duration-200 text-sm'
 										>
 											{link.title}
 										</Link>
@@ -55,7 +55,7 @@ const Footer = () => {
 								<li>
 									<a
 										href='#'
-										className='text-gray-300 hover:text-dark transition-colors duration-200 text-sm'
+										className='text-gray-300 hover:text-primary-purple-light transition-colors duration-200 text-sm'
 									>
 										Help Center
 									</a>
@@ -63,7 +63,7 @@ const Footer = () => {
 								<li>
 									<a
 										href='#'
-										className='text-gray-300 hover:text-dark transition-colors duration-200 text-sm'
+										className='text-gray-300 hover:text-primary-purple-light transition-colors duration-200 text-sm'
 									>
 										FAQ
 									</a>
@@ -71,7 +71,7 @@ const Footer = () => {
 								<li>
 									<a
 										href='#'
-										className='text-gray-300 hover:text-dark transition-colors duration-200 text-sm'
+										className='text-gray-300 hover:text-primary-purple-light transition-colors duration-200 text-sm'
 									>
 										Terms and Policies
 									</a>
@@ -91,7 +91,8 @@ const Footer = () => {
 								/>
 								<div>
 									<p className='text-sm text-gray-300 leading-relaxed'>
-										426a Oluwadamilola Fashade Street Omole Phase 1, Lagos
+										426a Oluwadamilola Fashade Street Omole Phase 1,
+										Lagos
 									</p>
 								</div>
 							</div>
@@ -103,7 +104,7 @@ const Footer = () => {
 								/>
 								<a
 									href='tel:+2348064968725'
-									className='text-sm text-gray-300 hover:text-dark transition-colors'
+									className='text-sm text-gray-300 hover:text-primary-purple-light transition-colors'
 								>
 									+234 806 496 8725
 								</a>

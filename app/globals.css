@@ -3,11 +3,19 @@
 
 @theme {
 	--color-primary-purple: #5936d2;
-	--color-dark: #010101;
+	--color-primary-purple-light: #7b5ce0;
+	--color-primary-purple-dark: #3b2096;
+	--color-accent-purple: #f3f0ff;
+	--color-dark: #0f0f12;
+	--color-light-gray: #f9f9fb;
+	--color-text-body: #4b5563;
+	--color-text-header: #111827;
 }
 
 body {
 	font-family: "Inter", sans-serif;
+	color: var(--color-text-body);
+	background-color: var(--color-light-gray);
 }
 
 @keyframes popIn {
@@ -21,29 +29,44 @@ body {
 	}
 }
 
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 .animate-popIn {
-	animation: popIn 0.25s ease-out forwards;
+	animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fadeIn {
+	animation: fadeIn 0.4s ease-out forwards;
 }
 
 /* Custom scroll bar */
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 10px;
+	height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-	background-color: #5936d2;
-	border-radius: 4px;
+	background-color: var(--color-primary-purple);
+	border-radius: 5px;
+	border: 2px solid var(--color-light-gray);
 }
 ::-webkit-scrollbar-thumb:hover {
-	background-color: #5936d2;
+	background-color: var(--color-primary-purple-dark);
 }
 ::-webkit-scrollbar-track {
-	background-color: #f1f1f1;
-	border-radius: 4px;
+	background-color: transparent;
 }
 
 /* For firefox */
 * {
 	scrollbar-width: thin;
-	scrollbar-color: #5936d2 #f1f1f1;
+	scrollbar-color: var(--color-primary-purple) transparent;
 }

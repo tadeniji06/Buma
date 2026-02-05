@@ -61,7 +61,7 @@ const Categories = () => {
 			<div className='flex flex-col md:flex-row justify-between items-start md:items-center mx-auto max-w-6xl mb-8 gap-4'>
 				<div className='flex flex-col gap-2'>
 					<h2 className='text-2xl md:text-3xl font-bold text-gray-900'>
-						Explore by Region
+						Explore by Location
 					</h2>
 					<p className='text-gray-600 text-sm md:text-base font-light max-w-md'>
 						Find billboards available in your preferred city or area.

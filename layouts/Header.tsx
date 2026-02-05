@@ -38,7 +38,7 @@ const Header = () => {
 							<li key={index} className='cursor-pointer'>
 								<Link
 									href={link.link}
-									className='text-dark hover:text-blue-600 transition-colors duration-200 font-medium'
+									className='text-dark hover:text-primary-purple transition-colors duration-200 font-medium'
 								>
 									{link.title}
 								</Link>
@@ -112,7 +112,7 @@ const Header = () => {
 									<Link
 										href={link.link}
 										onClick={closeMobileMenu}
-										className='block px-6 py-4 text-dark hover:bg-gray-50 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100 last:border-b-0'
+										className='block px-6 py-4 text-dark hover:bg-gray-50 hover:text-primary-purple transition-colors duration-200 border-b border-gray-100 last:border-b-0'
 									>
 										{link.title}
 									</Link>
