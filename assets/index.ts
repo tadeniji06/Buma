@@ -14,8 +14,11 @@ import mobil from "./mobil.png";
 import scm from "./scm.png";
 import maybrands from "./may.png";
 import auth from "./auth.png";
+import ban from "./ban.jpeg";
+import ba3 from "./ba3.jpeg";
 export {
 	logo,
+	ba3,
 	footBg,
 	heroBg,
 	bill,
@@ -31,4 +34,5 @@ export {
 	scm,
 	maybrands,
 	auth,
+	ban,
 };
