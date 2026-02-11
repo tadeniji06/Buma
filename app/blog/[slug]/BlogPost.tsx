@@ -9,7 +9,7 @@ import {
 	UserIcon,
 	ArrowLeftIcon,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface BlogPostProps {
 	post: BlogPostType;
@@ -135,18 +135,31 @@ const PortableText = ({ content }: { content: any[] }) => {
 const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 	const [showShareMenu, setShowShareMenu] = useState(false);
 	const [copySuccess, setCopySuccess] = useState(false);
-	const [views, setViews] = useState<number>(0);
-	const [reactions, setReactions] = useState<number>(0);
+	const [views, setViews] = useState<number>(post.views || 0);
+	const [reactions, setReactions] = useState<number>(
+		post.reactions || 0,
+	);
 	const [hasReacted, setHasReacted] = useState(false);
+	const hasViewedRef = useRef(false);
 
-	// Simulate fetching views and reactions
 	useEffect(() => {
-		// Generate deterministically random numbers based on slug length or ID
-		const pseudoRandom = post._id
-			.split("")
-			.reduce((acc, char) => acc + char.charCodeAt(0), 0);
-		setViews(1200 + (pseudoRandom % 5000));
-		setReactions(45 + (pseudoRandom % 200));
+		// Fetch real-time stats
+		const fetchStats = async () => {
+			try {
+				const res = await fetch(`/api/stats?id=${post._id}`);
+				if (res.ok) {
+					const data = await res.json();
+					// Only update if we get valid numbers back
+					if (typeof data.views === "number") setViews(data.views);
+					if (typeof data.reactions === "number")
+						setReactions(data.reactions);
+				}
+			} catch (error) {
+				console.error("Failed to fetch stats:", error);
+			}
+		};
+
+		fetchStats();
 
 		// Check if user has reacted locally
 		const storedReaction = localStorage.getItem(
@@ -155,17 +168,52 @@ const BlogPost = ({ post, relatedPosts }: BlogPostProps) => {
 		if (storedReaction) {
 			setHasReacted(true);
 		}
+
+		// Increment view count via API
+		if (!hasViewedRef.current) {
+			hasViewedRef.current = true;
+			fetch("/api/stats", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ id: post._id, type: "view" }),
+			}).catch((err) =>
+				console.error("Error incrementing view:", err),
+			);
+		}
 	}, [post._id]);
 
-	const handleReaction = () => {
+	const handleReaction = async () => {
 		if (hasReacted) {
-			setReactions((prev) => prev - 1);
+			setReactions((prev) => Math.max(0, prev - 1));
 			setHasReacted(false);
 			localStorage.removeItem(`reaction_${post._id}`);
+
+			try {
+				await fetch("/api/stats", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						id: post._id,
+						type: "remove-reaction",
+					}),
+				});
+			} catch (error) {
+				console.error("Error removing reaction:", error);
+			}
 		} else {
 			setReactions((prev) => prev + 1);
 			setHasReacted(true);
 			localStorage.setItem(`reaction_${post._id}`, "true");
+
+			try {
+				await fetch("/api/stats", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ id: post._id, type: "reaction" }),
+				});
+			} catch (error) {
+				console.error("Error adding reaction:", error);
+			}
 		}
 	};
 

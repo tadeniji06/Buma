@@ -27,6 +27,8 @@ export interface BlogPost {
 	publishedAt: string;
 	body: any[];
 	estimatedReadingTime: number;
+	views?: number;
+	reactions?: number;
 }
 
 export const client = createClient({
@@ -43,7 +45,7 @@ export const urlFor = (source: SanityImageSource) =>
 // Query functions with proper typing
 export const getBlogPosts = async (
 	limit = 10,
-	offset = 0
+	offset = 0,
 ): Promise<BlogPost[]> => {
 	const query = `*[_type == "post"] | order(publishedAt desc) [${offset}...${
 		offset + limit
@@ -63,14 +65,16 @@ export const getBlogPosts = async (
     },
     publishedAt,
     body[0...2],
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 )
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),
+    views,
+    reactions
   }`;
 
 	return await client.fetch(query);
 };
 
 export const getBlogPost = async (
-	slug: string
+	slug: string,
 ): Promise<BlogPost | null> => {
 	const query = `*[_type == "post" && slug.current == $slug][0] {
     _id,
@@ -89,7 +93,9 @@ export const getBlogPost = async (
     },
     publishedAt,
     body,
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 )
+    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),
+    views,
+    reactions
   }`;
 
 	return await client.fetch(query, { slug });
@@ -98,7 +104,7 @@ export const getBlogPost = async (
 export const getRelatedPosts = async (
 	categories: Category[],
 	currentPostId: string,
-	limit = 3
+	limit = 3,
 ): Promise<BlogPost[]> => {
 	const query = `*[_type == "post" && _id != $currentPostId && count((categories[]._ref)[@ in $categories]) > 0] | order(publishedAt desc) [0...${limit}] {
     _id,
@@ -120,7 +126,7 @@ export const getRelatedPosts = async (
 };
 
 export const searchPosts = async (
-	searchTerm: string
+	searchTerm: string,
 ): Promise<BlogPost[]> => {
 	const query = `*[_type == "post" && (title match $searchTerm || pt::text(body) match $searchTerm)] | order(publishedAt desc) {
     _id,
