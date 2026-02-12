@@ -24,14 +24,14 @@ const Body = () => {
 			setVendors(data);
 
 			// Flatten all billboards from all vendors/regions
-			const allBoards = data.flatMap((vendor) =>
-				vendor.regions.flatMap((region) =>
-					region.billboards.map((b) => ({
+			const allBoards = (data || []).flatMap((vendor: Vendor) =>
+				(vendor.regions || []).flatMap((region: any) =>
+					(region.billboards || []).map((b: Billboard) => ({
 						...b,
 						vendor: vendor.name,
 						region: region.name,
-					}))
-				)
+					})),
+				),
 			);
 
 			setBillboards(allBoards);
@@ -48,7 +48,7 @@ const Body = () => {
 			return;
 		}
 		const filtered = billboards.filter((b) =>
-			b.area?.toLowerCase().includes(location)
+			b.area?.toLowerCase().includes(location),
 		);
 		setFilteredBillboards(filtered);
 	};
@@ -91,7 +91,7 @@ const Body = () => {
 							const message = encodeURIComponent(
 								`Hi, I’m interested in the billboard at ${
 									b.area || "unknown area"
-								} (${b.size || "N/A"})`
+								} (${b.size || "N/A"})`,
 							);
 							const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
 
@@ -116,8 +116,8 @@ const Body = () => {
 												b.status === "available"
 													? "bg-green-100 text-green-700"
 													: b.status === "booked"
-													? "bg-red-100 text-red-700"
-													: "bg-yellow-100 text-yellow-700"
+														? "bg-red-100 text-red-700"
+														: "bg-yellow-100 text-yellow-700"
 											}`}
 										>
 											{b.status}

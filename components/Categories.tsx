@@ -18,14 +18,15 @@ const Categories = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const data: Vendor[] = await sanity.fetch(
-				GET_VENDORS_WITH_BILLBOARDS
+				GET_VENDORS_WITH_BILLBOARDS,
 			);
 			const regionMap = new Map<string, RegionCard>();
 
 			// Flatten regions across vendors
-			data.forEach((vendor) => {
-				vendor.regions.forEach((region) => {
-					const allImages = region.billboards.map((b) => b.image);
+			data?.forEach((vendor) => {
+				vendor.regions?.forEach((region) => {
+					const billboards = region.billboards || [];
+					const allImages = billboards.map((b) => b.image);
 					const cover = allImages.length
 						? allImages[0]
 						: "/fallback.jpg";
@@ -33,12 +34,12 @@ const Categories = () => {
 					if (!regionMap.has(region.name)) {
 						regionMap.set(region.name, {
 							name: region.name,
-							total: region.billboards.length,
+							total: billboards.length,
 							image: cover,
 						});
 					} else {
 						const existing = regionMap.get(region.name)!;
-						existing.total += region.billboards.length;
+						existing.total += billboards.length;
 					}
 				});
 			});
@@ -80,7 +81,9 @@ const Categories = () => {
 						key={region.name}
 						className='group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 cursor-pointer'
 					>
-						<Link href={`/categories?region=${encodeURIComponent(region.name)}`}>
+						<Link
+							href={`/categories?region=${encodeURIComponent(region.name)}`}
+						>
 							<div className='relative w-full h-44'>
 								<Image
 									src={region.image}
@@ -94,7 +97,8 @@ const Categories = () => {
 										{region.name}
 									</h3>
 									<p className='text-sm text-gray-200'>
-										{region.total} billboard{region.total !== 1 && "s"}
+										{region.total} billboard
+										{region.total !== 1 && "s"}
 									</p>
 								</div>
 							</div>
