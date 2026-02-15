@@ -8,11 +8,11 @@ const Hero = () => {
 	const [fade, setFade] = useState(true);
 
 	const heroTexts = [
-		"Billboard",
-		"TV Commercial",
-		"Radio Slot",
-		"Digital Screen",
-		"Newspaper Ad",
+		"Radio",
+		"TV",
+		"PR",
+		"Television",
+		"Influencer Marketing",
 	];
 
 	useEffect(() => {

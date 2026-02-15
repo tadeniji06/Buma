@@ -24,9 +24,10 @@ const Footer = () => {
 								brands with the perfect locations for their campaigns.
 							</p>
 							<p>
-								We are a pioneer agency with the goal of simplifying
-								media buying processes whilst ensuring customers'
-								satisfaction.
+								Business is fragmented in Africa. programmatic
+								advertising hasn't been able to solve it. Enter buma,
+								the ultimate media place that aggregates media in
+								Africa from Radio, TV, PR and influencer marketing
 							</p>
 						</div>
 					</div>
@@ -77,38 +78,6 @@ const Footer = () => {
 									</a>
 								</li>
 							</ul>
-						</div>
-					</div>
-
-					{/* Contact Information Column */}
-					<div className='space-y-6'>
-						{/* Lagos Office */}
-						<div>
-							<div className='flex items-start gap-3 mb-3'>
-								<Icon
-									icon='mdi:home'
-									className='text-white text-xl mt-1'
-								/>
-								<div>
-									<p className='text-sm text-gray-300 leading-relaxed'>
-										426a Oluwadamilola Fashade Street Omole Phase 1,
-										Lagos
-									</p>
-								</div>
-							</div>
-
-							<div className='flex items-center gap-3 mb-2'>
-								<Icon
-									icon='mdi:phone'
-									className='text-white text-lg'
-								/>
-								<a
-									href='tel:+2348064968725'
-									className='text-sm text-gray-300 hover:text-primary-purple-light transition-colors'
-								>
-									+234 806 496 8725
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
