@@ -13,7 +13,6 @@ const Hero = () => {
 		"PR",
 		"Billboards",
 		"Influencer Marketing",
-		"Digital Screens",
 	];
 
 	useEffect(() => {
