@@ -20,6 +20,10 @@ export const headerLinks = [
 		title: "How it works",
 		link: "/tutorial",
 	},
+	{
+		title: "Contact Us",
+		link: "/contact",
+	},
 	// {
 	// 	title: "Login",
 	// 	link: "/login",
