@@ -11,8 +11,9 @@ const Hero = () => {
 		"Radio",
 		"TV",
 		"PR",
-		"Television",
+		"Billboards",
 		"Influencer Marketing",
+		"Digital Screens",
 	];
 
 	useEffect(() => {
