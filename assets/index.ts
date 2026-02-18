@@ -22,8 +22,10 @@ import hero2 from "./hero-influencer.jpg.jpeg";
 import hero3 from "./hero-pr.jpg.jpeg";
 import hero4 from "./hero-radio.jpg.jpeg";
 import hero5 from "./hero-tv.jpg.jpeg";
+import bbill from "./bBill.jpeg";
 export {
 	logo,
+	bbill,
 	hero1,
 	hero2,
 	hero3,

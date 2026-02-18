@@ -1,5 +1,5 @@
 "use client";
-import { heroBg } from "@/assets";
+import { bbill } from "@/assets";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -18,14 +18,14 @@ const Hero = ({ onSearch }: HeroProps) => {
 	return (
 		<section className="relative w-full h-auto p-4 md:p-0 md:h-[700px] overflow-hidden">
 			<Image
-				src={heroBg}
+				src={bbill}
 				alt="Hero Background"
 				priority
 				fill
-				className="object-cover"
+				className="object-fit"
 				// style={{ zIndex: -2 }}
 			/>
-			<div className="absolute inset-0 bg-black/70" />
+			<div className="absolute inset-0 bg-black/40" />
 
 			<div className="relative z-10 flex items-center justify-center h-full px-4">
 				<div className="flex flex-col gap-6 text-white items-center max-w-3xl mx-auto text-center">
