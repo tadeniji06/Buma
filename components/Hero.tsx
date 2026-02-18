@@ -9,9 +9,9 @@ const Hero = () => {
 	const [fade, setFade] = useState(true);
 
 	const heroTexts = [
-		{ text: "Radio", image: hero4 },
-		{ text: "TV", image: hero5 },
-		{ text: "PR", image: hero3 },
+		{ text: "Radio Stations", image: hero4 },
+		{ text: "TV Channels", image: hero5 },
+		{ text: "PR and Media", image: hero3 },
 		{ text: "Billboards", image: hero1 },
 		{ text: "Influencer Marketing", image: hero2 },
 	];
