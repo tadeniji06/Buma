@@ -16,8 +16,19 @@ import maybrands from "./may.png";
 import auth from "./auth.png";
 import ban from "./ban.jpeg";
 import ba3 from "./ba3.jpeg";
+
+import hero1 from "./hero-billboard.jpg.jpeg";
+import hero2 from "./hero-influencer.jpg.jpeg";
+import hero3 from "./hero-pr.jpg.jpeg";
+import hero4 from "./hero-radio.jpg.jpeg";
+import hero5 from "./hero-tv.jpg.jpeg";
 export {
 	logo,
+	hero1,
+	hero2,
+	hero3,
+	hero4,
+	hero5,
 	ba3,
 	footBg,
 	heroBg,

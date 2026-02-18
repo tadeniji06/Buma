@@ -4,6 +4,8 @@ import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import ClarityScript from "@/components/Clarity";
 
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+
 export const metadata: Metadata = {
 	title: "Buma | Media Buying In Africa",
 	description: "Buma - Media buying in Africa",
@@ -24,6 +26,7 @@ export default function RootLayout({
 				{children}
 				<Footer />
 				<ClarityScript />
+				<FloatingWhatsApp />
 			</body>
 		</html>
 	);

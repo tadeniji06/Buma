@@ -1,19 +1,19 @@
-import Categories from "@/components/Categories";
 import Clients from "@/components/Clients";
 import Hero from "@/components/Hero";
-import ListSpace from "@/components/ListSpace";
 import Reviews from "@/components/Reviews";
+import Services from "@/components/Services";
+import HowItWorks from "@/components/HowItWorks";
+import Advantages from "@/components/Advantages";
 
-const Page = () => {
+export default function Home() {
 	return (
 		<div className='min-h-screen'>
 			<Hero />
-			<Categories />
-			<ListSpace />
+			<Services />
+			<HowItWorks />
+			<Advantages />
 			<Clients />
-			<Reviews />
+			{/* <Reviews /> */}
 		</div>
 	);
-};
-
-export default Page;
+}
