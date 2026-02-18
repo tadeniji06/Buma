@@ -145,7 +145,7 @@ const Header = () => {
 
 				{/* Desktop CTA Button */}
 				<div className='hidden lg:block pl-6'>
-					<Link href='/'>
+					<Link href='/contact'>
 						<button className='py-3 px-6 rounded-full bg-primary-purple text-white hover:bg-primary-purple-dark text-sm font-bold shadow-lg shadow-primary-purple/30 transition-all duration-200 transform hover:-translate-y-0.5'>
 						Book Consultation
 						</button>
@@ -286,7 +286,7 @@ const Header = () => {
 
 					{/* Mobile CTA Button */}
 					<div className='p-4 mt-auto border-t border-gray-100'>
-						<Link href='/'>
+						<Link href='/contact'>
 							<button
 								className='w-full py-3.5 px-6 rounded-xl text-center bg-primary-purple text-white font-bold shadow-lg shadow-primary-purple/20 hover:bg-primary-purple-dark transition-all duration-200 active:scale-95'
 								onClick={closeMobileMenu}
