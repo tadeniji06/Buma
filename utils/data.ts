@@ -16,10 +16,10 @@ export const headerLinks = [
 	// 	title: "Browse Spaces",
 	// 	link: "spaces",
 	// },
-	{
-		title: "How it works",
-		link: "/tutorial",
-	},
+	// {
+	// 	title: "How it works",
+	// 	link: "/tutorial",
+	// },
 	{
 		title: "Contact Us",
 		link: "/contact",
