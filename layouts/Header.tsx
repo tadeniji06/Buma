@@ -44,7 +44,7 @@ const Header = () => {
 
 	return (
 		<header className='sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm'>
-			<div className='flex items-center justify-between px-4 max-w-8xl mx-auto lg:px-6 relative'>
+			<div className='flex h-[80px] md:h-[100px] items-center justify-between px-4 max-w-8xl mx-auto lg:px-6 relative'>
 				{/* Logo */}
 				<div className='cursor-pointer flex-shrink-0 py-3'>
 					<Link href='/' onClick={closeMobileMenu}>
@@ -147,7 +147,7 @@ const Header = () => {
 				<div className='hidden lg:block pl-6'>
 					<Link href='/contact'>
 						<button className='py-3 px-6 rounded-full bg-primary-purple text-white hover:bg-primary-purple-dark text-sm font-bold shadow-lg shadow-primary-purple/30 transition-all duration-200 transform hover:-translate-y-0.5'>
-						Book Consultation
+							Book Consultation
 						</button>
 					</Link>
 				</div>
@@ -291,7 +291,7 @@ const Header = () => {
 								className='w-full py-3.5 px-6 rounded-xl text-center bg-primary-purple text-white font-bold shadow-lg shadow-primary-purple/20 hover:bg-primary-purple-dark transition-all duration-200 active:scale-95'
 								onClick={closeMobileMenu}
 							>
-							Book Consultation
+								Book Consultation
 							</button>
 						</Link>
 					</div>
