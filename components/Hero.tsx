@@ -83,7 +83,7 @@ const Hero = () => {
 
 					{/* Subtext */}
 					<p className='text-lg md:text-xl text-gray-200 font-medium max-w-xl leading-relaxed'>
-						Tell us what you need. We handle everything — from finding
+						Tell us what you need. We handle everything, from finding
 						the right media channel to delivering results for your
 						campaign.
 					</p>
