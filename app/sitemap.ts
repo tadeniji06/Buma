@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			lastModified: new Date(post.publishedAt),
 			changeFrequency: "monthly" as const,
 			priority: 0.6,
-		})
+		}),
 	);
 
 	// Static pages
@@ -47,10 +47,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: "weekly",
 			priority: 0.7,
 		},
-  {
+		{
 			url: "https://www.mybuma.com/blog",
 			lastModified: new Date(),
 			changeFrequency: "weekly",
+			priority: 0.7,
+		},
+		{
+			url: "https://www.mybuma.com/radio",
+			lastModified: new Date(),
+			changeFrequency: "monthly",
+			priority: 0.8,
+		},
+		{
+			url: "https://www.mybuma.com/pr",
+			lastModified: new Date(),
+			changeFrequency: "monthly",
+			priority: 0.8,
+		},
+		{
+			url: "https://www.mybuma.com/contact",
+			lastModified: new Date(),
+			changeFrequency: "yearly",
 			priority: 0.7,
 		},
 	];
