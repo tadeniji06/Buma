@@ -5,6 +5,7 @@ import Footer from "@/layouts/Footer";
 import ClarityScript from "@/components/Clarity";
 
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
 	title: "Buma | Africa's No.1 Media Buying Marketplace",
@@ -78,6 +79,7 @@ export default function RootLayout({
 				<Footer />
 				<ClarityScript />
 				<FloatingWhatsApp />
+				<Toaster richColors position='top-right' />
 			</body>
 		</html>
 	);

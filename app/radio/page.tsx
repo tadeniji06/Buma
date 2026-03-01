@@ -2,49 +2,137 @@
 import { radioStations } from "@/utils/data";
 import ListSpace from "@/components/ListSpace";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { toast } from "sonner";
 
 const RadioPage = () => {
 	const [searchTerm, setSearchTerm] = useState("");
+	const resultsRef = useRef<HTMLDivElement>(null);
 
 	const filteredStations = radioStations.filter((station) =>
-		station.toLowerCase().includes(searchTerm.toLowerCase()),
+		station.name.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
+
+	// UX: Toast when no results found
+	useEffect(() => {
+		if (searchTerm && filteredStations.length === 0) {
+			toast.error(`No stations found for "${searchTerm}"`, {
+				description: "Try searching for a different name or region.",
+				id: "no-results-toast",
+			});
+		}
+	}, [searchTerm, filteredStations.length]);
+
+	const handleSearch = (value: string) => {
+		setSearchTerm(value);
+		if (value && resultsRef.current) {
+			resultsRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		}
+	};
 
 	return (
 		<div className='flex flex-col min-h-screen bg-gray-50'>
 			{/* Hero Section */}
-			<div className='relative bg-primary-purple py-20 px-6 text-center text-white overflow-hidden'>
-				<div className='absolute inset-0 opacity-10 pattern-dots'></div>
-				<div className='relative z-10 max-w-4xl mx-auto space-y-6'>
-					<h1 className='text-4xl md:text-5xl font-bold animate-fadeIn'>
-						Radio Stations
+			<div className='relative bg-gradient-to-br from-primary-purple via-purple-700 to-indigo-900 py-24 md:py-32 px-6 text-center text-white overflow-hidden'>
+				{/* Background Elements */}
+				<div className='absolute inset-0 opacity-20 pattern-dots'></div>
+				<div className='absolute -left-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl'></div>
+				<div className='absolute -right-20 -bottom-20 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl'></div>
+
+				{/* Floating Icons */}
+				<div
+					className='absolute top-20 left-[10%] opacity-20 animate-bounce hidden md:block'
+					style={{ animationDuration: "3s" }}
+				>
+					<Icon icon='mdi:radio-tower' className='w-12 h-12' />
+				</div>
+				<div
+					className='absolute bottom-20 right-[15%] opacity-20 animate-pulse hidden md:block'
+					style={{ animationDuration: "4s" }}
+				>
+					<Icon icon='mdi:microphone-variant' className='w-14 h-14' />
+				</div>
+				<div className='absolute top-[40%] right-[8%] opacity-10 hidden lg:block rotate-12'>
+					<Icon icon='mdi:waveform' className='w-24 h-24' />
+				</div>
+				<div className='absolute bottom-[30%] left-[5%] opacity-10 hidden lg:block -rotate-12'>
+					<Icon icon='mdi:music-note' className='w-20 h-20' />
+				</div>
+
+				<div className='relative z-10 max-w-4xl mx-auto space-y-8'>
+					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-purple-100 animate-fadeIn'>
+						<span className='flex h-2 w-2 rounded-full bg-green-400 animate-pulse'></span>
+						70+ Verified Radio Stations
+					</div>
+
+					<h1 className='text-5xl md:text-7xl font-extrabold tracking-tight animate-slideUp'>
+						Radio{" "}
+						<span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-indigo-200'>
+							Advertising
+						</span>
 					</h1>
-					<p className='text-xl md:text-2xl text-purple-100 max-w-2xl mx-auto'>
-						Connect with millions of listeners across top-rated radio
-						stations.
+
+					<p className='text-xl md:text-2xl text-purple-100/90 max-w-2xl mx-auto leading-relaxed'>
+						Reach millions of active listeners across Nigeria’s most
+						popular radio stations with instant slot booking.
 					</p>
 
 					{/* Search Bar */}
-					<div className='max-w-xl mx-auto mt-8 relative'>
-						<input
-							type='text'
-							placeholder='Search for a radio station...'
-							className='w-full pl-12 pr-4 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-4 focus:ring-purple-300 shadow-xl'
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-						/>
-						<Icon
-							icon='mdi:magnify'
-							className='absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6'
-						/>
+					<div className='max-w-2xl mx-auto mt-12 relative group'>
+						<div className='absolute -inset-1 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-full opacity-25 group-hover:opacity-50 transition duration-300 blur'></div>
+						<div className='relative'>
+							<input
+								type='text'
+								placeholder='Search stations, regions or frequencies...'
+								className='w-full pl-14 pr-6 py-5 rounded-full text-gray-900 bg-white shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-400/50 transition-all text-lg'
+								value={searchTerm}
+								onChange={(e) => handleSearch(e.target.value)}
+							/>
+							<Icon
+								icon='mdi:magnify'
+								className='absolute left-5 top-1/2 -translate-y-1/2 text-primary-purple w-7 h-7'
+							/>
+							{searchTerm && (
+								<button
+									onClick={() => handleSearch("")}
+									className='absolute right-5 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full transition-colors'
+								>
+									<Icon
+										icon='mdi:close'
+										className='w-5 h-5 text-gray-400'
+									/>
+								</button>
+							)}
+						</div>
+					</div>
+
+					{/* Popular Tags */}
+					<div className='flex flex-wrap justify-center gap-3 text-sm'>
+						<span className='text-purple-200/60'>Popular:</span>
+						{["Lagos", "Wazobia", "Cool FM", "Top 40", "News"].map(
+							(tag) => (
+								<button
+									key={tag}
+									onClick={() => handleSearch(tag)}
+									className='text-purple-100 hover:text-white hover:bg-white/10 px-3 py-1 rounded-md transition-colors'
+								>
+									{tag}
+								</button>
+							),
+						)}
 					</div>
 				</div>
 			</div>
 
 			{/* Content Section */}
-			<main className='flex-1 max-w-7xl mx-auto w-full px-6 py-12'>
+			<main
+				className='flex-1 max-w-7xl mx-auto w-full px-6 py-12'
+				ref={resultsRef}
+			>
 				<div className='flex justify-between items-center mb-8'>
 					<h2 className='text-2xl font-bold text-gray-900'>
 						Top Ranked Stations
@@ -77,12 +165,13 @@ const RadioPage = () => {
 					</div>
 				) : (
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-						{filteredStations.map((station, index) => {
+						{filteredStations.map(({ name, logo }, index) => {
 							// Find the original index for ranking if filtering
-							const originalRank = radioStations.indexOf(station) + 1;
+							const originalRank =
+								radioStations.findIndex((s) => s.name === name) + 1;
 
 							const message = encodeURIComponent(
-								`Hi, I’m interested in placing ads on ${station}`,
+								`Hi, I’m interested in placing ads on ${name}`,
 							);
 							const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
 
@@ -116,7 +205,7 @@ const RadioPage = () => {
 
 							return (
 								<div
-									key={station}
+									key={name}
 									className='group relative bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between h-full overflow-hidden'
 								>
 									{/* Background decorative icon */}
@@ -129,8 +218,19 @@ const RadioPage = () => {
 
 									<div>
 										<div className='flex items-start justify-between mb-4 relative z-10'>
-											<div className='w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-primary-purple group-hover:bg-primary-purple group-hover:text-white transition-colors shadow-sm ring-4 ring-white'>
-												{getRankDisplay(originalRank)}
+											<div className='flex gap-3'>
+												<div className='w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-primary-purple group-hover:bg-primary-purple group-hover:text-white transition-colors shadow-sm ring-4 ring-white'>
+													{getRankDisplay(originalRank)}
+												</div>
+												<div className='w-12 h-12 rounded-xl border border-gray-100 bg-white overflow-hidden p-1 shadow-sm flex items-center justify-center'>
+													<Image
+														src={logo}
+														alt={name}
+														width={40}
+														height={40}
+														className='object-contain w-full h-full'
+													/>
+												</div>
 											</div>
 											<div className='flex items-center gap-1 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide'>
 												<Icon
@@ -142,7 +242,7 @@ const RadioPage = () => {
 										</div>
 
 										<h3 className='text-lg font-bold text-gray-900 mb-1 group-hover:text-primary-purple transition-colors line-clamp-1 relative z-10'>
-											{station}
+											{name}
 										</h3>
 
 										<div className='flex items-center gap-2 text-xs text-gray-500 mb-6 relative z-10'>

@@ -44,6 +44,8 @@ export const billboardTypes = [
 	"Backlit",
 ];
 
+import { radioLogos } from "@/assets/radio";
+
 export const radioStations = [
 	"Bond 92.9 FM",
 	"Wazobia 95.1 FM",
@@ -117,7 +119,10 @@ export const radioStations = [
 	"Lion 93.9 FM",
 	"V.O.N. (Voice Of Nigeria)",
 	"Bubble 89.2 FM",
-];
+].map((name, index) => ({
+	name,
+	logo: radioLogos[index % radioLogos.length],
+}));
 
 export const prPlatforms = [
 	"Guardian",
