@@ -135,7 +135,7 @@ const RadioPage = () => {
 			>
 				<div className='flex justify-between items-center mb-8'>
 					<h2 className='text-2xl font-bold text-gray-900'>
-						Top Ranked Stations
+						Available Stations
 					</h2>
 					<span className='text-gray-500 font-medium'>
 						{filteredStations.length} station
@@ -166,42 +166,10 @@ const RadioPage = () => {
 				) : (
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 						{filteredStations.map(({ name, logo }, index) => {
-							// Find the original index for ranking if filtering
-							const originalRank =
-								radioStations.findIndex((s) => s.name === name) + 1;
-
 							const message = encodeURIComponent(
 								`Hi, I’m interested in placing ads on ${name}`,
 							);
 							const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
-
-							// Rank Icon Logic
-							const getRankDisplay = (rank: number) => {
-								if (rank === 1)
-									return (
-										<Icon
-											icon='mdi:trophy'
-											className='text-yellow-500 w-6 h-6'
-										/>
-									);
-								if (rank === 2)
-									return (
-										<Icon
-											icon='mdi:medal'
-											className='text-gray-400 w-6 h-6'
-										/>
-									);
-								if (rank === 3)
-									return (
-										<Icon
-											icon='mdi:medal'
-											className='text-amber-700 w-6 h-6'
-										/>
-									);
-								return (
-									<span className='font-bold text-lg'>#{rank}</span>
-								);
-							};
 
 							return (
 								<div
@@ -219,9 +187,6 @@ const RadioPage = () => {
 									<div>
 										<div className='flex items-start justify-between mb-4 relative z-10'>
 											<div className='flex gap-3'>
-												<div className='w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-primary-purple group-hover:bg-primary-purple group-hover:text-white transition-colors shadow-sm ring-4 ring-white'>
-													{getRankDisplay(originalRank)}
-												</div>
 												<div className='w-12 h-12 rounded-xl border border-gray-100 bg-white overflow-hidden p-1 shadow-sm flex items-center justify-center'>
 													<Image
 														src={logo}
