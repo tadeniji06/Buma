@@ -119,22 +119,28 @@ ${formData.message}`;
 								</div>
 							</div>
 
-							<div className='flex items-start gap-4 group cursor-pointer'>
+							<div className='flex items-start gap-4 group'>
 								<div className='w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-primary-purple shrink-0 group-hover:bg-primary-purple group-hover:text-white transition-colors duration-300'>
 									<Icon
 										icon='mdi:phone-outline'
 										className='w-6 h-6'
 									/>
 								</div>
-								<div>
-									<h3 className='font-semibold text-gray-900'>
+								<div className='flex flex-col gap-1'>
+									<h3 className='font-semibold text-gray-900 mb-1'>
 										Call Us
 									</h3>
 									<a
 										href='tel:+2347040925563'
-										className='text-gray-600 hover:text-primary-purple transition-colors'
+										className='text-gray-600 hover:text-primary-purple transition-colors font-medium'
 									>
 										+234 704 092 5563
+									</a>
+									<a
+										href='tel:+27656946477'
+										className='text-gray-600 hover:text-primary-purple transition-colors font-medium'
+									>
+										+27 65 694 6477
 									</a>
 								</div>
 							</div>
