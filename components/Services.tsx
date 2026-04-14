@@ -39,7 +39,7 @@ const services = [
 		link: "#",
 		color: "bg-pink-50 text-pink-600",
 		cta: "Coming Soon",
-		comingSoon: true,
+		comingSoon: false,
 	},
 	{
 		title: "Influencer Marketing",
@@ -48,7 +48,7 @@ const services = [
 		link: "#",
 		color: "bg-orange-50 text-orange-600",
 		cta: "Coming Soon",
-		comingSoon: true,
+		comingSoon: false,
 	},
 ];
 
