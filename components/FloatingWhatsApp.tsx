@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/react";
 
 const FloatingWhatsApp = () => {
-	const phoneNumber = "2347040925563";
+	const phoneNumber = "2348064968725";
 	const message = encodeURIComponent(
 		"Hi, I'm interested in your media services.",
 	);

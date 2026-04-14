@@ -48,7 +48,7 @@ const ContactPage = () => {
 *Message:*
 ${formData.message}`;
 
-		const whatsappUrl = `https://wa.me/2347040925563?text=${encodeURIComponent(
+		const whatsappUrl = `https://wa.me/2348064968725?text=${encodeURIComponent(
 			text,
 		)}`;
 
@@ -136,11 +136,31 @@ ${formData.message}`;
 									>
 										+234 704 092 5563
 									</a>
+
 									<a
 										href='tel:+27656946477'
 										className='text-gray-600 hover:text-primary-purple transition-colors font-medium'
 									>
 										+27 65 694 6477
+									</a>
+								</div>
+							</div>
+
+							<div className='flex items-start gap-4 group'>
+								<div className='w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-primary-purple shrink-0 group-hover:bg-primary-purple group-hover:text-white transition-colors duration-300'>
+									<Icon icon='mdi:whatsapp' className='w-6 h-6' />
+								</div>
+								<div>
+									<h3 className='font-semibold text-gray-900'>
+										Chat On WhatsApp
+									</h3>
+									<a
+										href='https://wa.me/2348064968725'
+										target='_blank'
+										rel='noopener noreferrer'
+										className='text-gray-600 hover:text-primary-purple transition-colors font-medium'
+									>
+										+234 806 496 8725
 									</a>
 								</div>
 							</div>
