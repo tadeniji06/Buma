@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 	keywords: [
 		"Contact Buma",
 		"Media Buying Consultation",
-		"Advertising Agency Nigeria",
+		"Advertising MarketPlace Nigeria",
 		"Billboard Booking Lagos",
 		"Buma Support",
 	],

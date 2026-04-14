@@ -13,7 +13,7 @@ const Reviews = () => {
 		{
 			desc: "The best platform we've used for managing campaigns across multiple cities. Streamlined, fast, and reliable.",
 			name: "Victor D.A",
-			role: "Media Buyer, AdPro Agency",
+			role: "Media Buyer, AdPro MarketPlace",
 		},
 	];
 

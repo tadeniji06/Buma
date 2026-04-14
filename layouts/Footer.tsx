@@ -14,7 +14,7 @@ const Footer = () => {
 						<div className='mb-6'>
 							<Image width={200} alt='logo' src={logo} />
 							<p className='text-lg font-medium text-white mb-4'>
-								... Africa's No.1 Media Buying Agency
+								... Africa's No.1 Media Buying MarketPlace
 							</p>
 						</div>
 						<div className='text-sm leading-relaxed text-gray-300'>
