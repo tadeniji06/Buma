@@ -39,11 +39,11 @@ const InfluencersPage = () => {
 	return (
 		<div className='flex flex-col min-h-screen bg-gray-50'>
 			{/* Hero Section */}
-			<div className='relative bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 py-24 md:py-32 px-6 text-center text-white overflow-hidden'>
+			<div className='relative bg-gradient-to-br from-gray-900 via-black to-gray-800 py-24 md:py-32 px-6 text-center text-white overflow-hidden'>
 				{/* Background Elements */}
 				<div className='absolute inset-0 opacity-20 pattern-dots'></div>
 				<div className='absolute -left-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl'></div>
-				<div className='absolute -right-20 -bottom-20 w-80 h-80 bg-red-500/20 rounded-full blur-3xl'></div>
+				<div className='absolute -right-20 -bottom-20 w-80 h-80 bg-gray-500/20 rounded-full blur-3xl'></div>
 
 				{/* Floating Icons */}
 				<div
@@ -66,36 +66,36 @@ const InfluencersPage = () => {
 				</div>
 
 				<div className='relative z-10 max-w-4xl mx-auto space-y-8'>
-					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-orange-100 animate-fadeIn'>
+					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-gray-200 animate-fadeIn'>
 						<span className='flex h-2 w-2 rounded-full bg-green-400 animate-pulse'></span>
 						700+ Top Influencers Available
 					</div>
 
 					<h1 className='text-5xl md:text-7xl font-extrabold tracking-tight animate-slideUp'>
 						Influencer{" "}
-						<span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-200 to-yellow-200'>
+						<span className='text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-white'>
 							Marketing
 						</span>
 					</h1>
 
-					<p className='text-xl md:text-2xl text-orange-100/90 max-w-2xl mx-auto leading-relaxed'>
+					<p className='text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
 						Connect with top content creators and influencers to amplify your brand's reach and engagement.
 					</p>
 
 					{/* Search Bar */}
 					<div className='max-w-2xl mx-auto mt-12 relative group'>
-						<div className='absolute -inset-1 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full opacity-25 group-hover:opacity-50 transition duration-300 blur'></div>
+						<div className='absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-400 rounded-full opacity-25 group-hover:opacity-50 transition duration-300 blur'></div>
 						<div className='relative'>
 							<input
 								type='text'
 								placeholder='Search by name, niche, or platform...'
-								className='w-full pl-14 pr-6 py-5 rounded-full text-gray-900 bg-white shadow-2xl focus:outline-none focus:ring-4 focus:ring-orange-400/50 transition-all text-lg'
+								className='w-full pl-14 pr-6 py-5 rounded-full text-gray-900 bg-white shadow-2xl focus:outline-none focus:ring-4 focus:ring-gray-400/50 transition-all text-lg'
 								value={searchTerm}
 								onChange={(e) => handleSearch(e.target.value)}
 							/>
 							<Icon
 								icon='mdi:magnify'
-								className='absolute left-5 top-1/2 -translate-y-1/2 text-orange-500 w-7 h-7'
+								className='absolute left-5 top-1/2 -translate-y-1/2 text-gray-900 w-7 h-7'
 							/>
 							{searchTerm && (
 								<button
@@ -113,13 +113,13 @@ const InfluencersPage = () => {
 
 					{/* Popular Tags */}
 					<div className='flex flex-wrap justify-center gap-3 text-sm'>
-						<span className='text-orange-200/60'>Popular:</span>
+						<span className='text-gray-400'>Popular:</span>
 						{["Comedy", "Instagram", "News", "Entertainment"].map(
 							(tag) => (
 								<button
 									key={tag}
 									onClick={() => handleSearch(tag)}
-									className='text-orange-100 hover:text-white hover:bg-white/10 px-3 py-1 rounded-md transition-colors'
+									className='text-gray-300 hover:text-white hover:bg-white/10 px-3 py-1 rounded-md transition-colors'
 								>
 									{tag}
 								</button>
