@@ -39,15 +39,15 @@ const services = [
 		link: "#",
 		color: "bg-pink-50 text-pink-600",
 		cta: "Coming Soon",
-		comingSoon: false,
+		comingSoon: true,
 	},
 	{
 		title: "Influencer Marketing",
 		description: "Connect with top influencers — over 700 available",
 		icon: "mdi:account-group-outline",
-		link: "#",
+		link: "/influencers",
 		color: "bg-orange-50 text-orange-600",
-		cta: "Coming Soon",
+		cta: "Click here to start →",
 		comingSoon: false,
 	},
 ];

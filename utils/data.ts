@@ -308,6 +308,44 @@ export const prPlatforms = [
 	"Brand Essence",
 ];
 
+export const influencers = [
+	{
+		name: "Broda Shaggi",
+		niche: "Comedy",
+		platform: "Instagram/YouTube",
+		followers: "12M+",
+		image: "https://ui-avatars.com/api/?name=Broda+Shaggi&background=random",
+	},
+	{
+		name: "Mark Angel",
+		niche: "Comedy",
+		platform: "YouTube/Facebook",
+		followers: "20M+",
+		image: "https://ui-avatars.com/api/?name=Mark+Angel&background=random",
+	},
+	{
+		name: "Taaooma",
+		niche: "Comedy",
+		platform: "Instagram/YouTube",
+		followers: "5.5M+",
+		image: "https://ui-avatars.com/api/?name=Taaooma&background=random",
+	},
+	{
+		name: "Sabinus",
+		niche: "Comedy",
+		platform: "Instagram/YouTube",
+		followers: "4M+",
+		image: "https://ui-avatars.com/api/?name=Sabinus&background=random",
+	},
+	{
+		name: "KieKie",
+		niche: "Comedy/Fashion",
+		platform: "Instagram/YouTube",
+		followers: "3.5M+",
+		image: "https://ui-avatars.com/api/?name=KieKie&background=random",
+	},
+];
+
 export const categoryData = {
 	OOH: {
 		title: "Out of Home (OOH)",
@@ -338,8 +376,8 @@ export const categoryData = {
 	},
 	"Influencer Marketing": {
 		title: "Influencer Marketing",
-		items: [],
-		comingSoon: true,
+		items: influencers,
+		comingSoon: false,
 		description:
 			"Connect with top influencers to promote your brand.",
 	},
