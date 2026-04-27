@@ -371,7 +371,7 @@ export const categoryData = {
 	TV: {
 		title: "TV Stations",
 		items: [],
-		comingSoon: true,
+		comingSoon: false,
 		description: "Television advertising opportunities coming soon.",
 	},
 	"Influencer Marketing": {
