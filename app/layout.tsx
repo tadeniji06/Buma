@@ -67,6 +67,34 @@ export const metadata: Metadata = {
 	},
 };
 
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "Buma",
+	url: "https://www.mybuma.com",
+	potentialAction: {
+		"@type": "SearchAction",
+		target: "https://www.mybuma.com/?s={search_term_string}",
+		"query-input": "required name=search_term_string",
+	},
+};
+
+const organizationSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: "Buma",
+	url: "https://www.mybuma.com",
+	logo: "https://www.mybuma.com/logo.png",
+	description:
+		"Buma is a modern platform offering innovative products and services designed to simplify everyday living and enhance customer experiences.",
+	sameAs: [
+		"https://www.instagram.com/",
+		"https://www.facebook.com/",
+		"https://www.linkedin.com/",
+		"https://www.twitter.com/",
+	],
+};
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -74,6 +102,20 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
+			<head>
+				<script
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(websiteSchema),
+					}}
+				/>
+				<script
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(organizationSchema),
+					}}
+				/>
+			</head>
 			<body className={`antialiased`}>
 				<Header />
 				{children}

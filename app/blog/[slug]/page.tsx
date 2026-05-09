@@ -61,7 +61,50 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 		post.categories || [],
 		post._id
 	);
-	return <BlogPost post={post} relatedPosts={relatedPosts} />;
+
+	const blogPostingSchema = {
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		headline: post.title,
+		description:
+			post.body?.[0]?.children?.[0]?.text?.slice(0, 160) ||
+			`Read ${post.title} on Buma Blog and learn strategies for business growth.`,
+		image: post.mainImage
+			? urlFor(post.mainImage).url()
+			: "https://www.mybuma.com/logo.png",
+		author: {
+			"@type": "Person",
+			name: "Buma Team",
+		},
+		publisher: {
+			"@type": "Organization",
+			name: "Buma",
+			logo: {
+				"@type": "ImageObject",
+				url: "https://www.mybuma.com/logo.png",
+			},
+		},
+		datePublished: post.publishedAt || new Date().toISOString(),
+		dateModified: post.publishedAt || new Date().toISOString(),
+		mainEntityOfPage: {
+			"@type": "WebPage",
+			"@id": `https://www.mybuma.com/blog/${slug}`,
+		},
+		keywords: "business, lifestyle, digital solutions, Buma",
+		articleSection: "Blog",
+	};
+
+	return (
+		<>
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(blogPostingSchema),
+				}}
+			/>
+			<BlogPost post={post} relatedPosts={relatedPosts} />
+		</>
+	);
 };
 
 export default BlogPostPage;
