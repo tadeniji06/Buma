@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { headerLinks, categoryData } from "../utils/data";
+import { headerLinks, categoryData } from "../utils/navigation";
 import { logo } from "../assets/index";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -94,14 +94,7 @@ const Header = () => {
 													Object.keys(categoryData) as CategoryKey[]
 												).map((category) => {
 													const info = categoryData[category];
-													let href = "#";
-													if (!info.comingSoon) {
-														if (category === "OOH")
-															href = "/categories";
-														else if (category === "Radio")
-															href = "/radio";
-														else if (category === "PR") href = "/pr";
-													}
+													const href = info.comingSoon ? "#" : info.href;
 
 													return (
 														<Link
@@ -110,10 +103,16 @@ const Header = () => {
 															className={`block px-4 py-3 hover:bg-gray-50 flex items-center justify-between group/item transition-colors ${info.comingSoon ? "cursor-not-allowed opacity-70" : ""}`}
 														>
 															<div className='flex flex-col'>
-																<span
-																	className={`text-sm font-medium ${info.comingSoon ? "text-gray-500" : "text-gray-700 group-hover/item:text-primary-purple"}`}
-																>
-																	{info.title}
+																<span className='flex items-center gap-2'>
+																	<Icon
+																		icon={info.icon}
+																		className={`h-4 w-4 ${info.comingSoon ? "text-gray-400" : "text-primary-purple"}`}
+																	/>
+																	<span
+																		className={`text-sm font-medium ${info.comingSoon ? "text-gray-500" : "text-gray-700 group-hover/item:text-primary-purple"}`}
+																	>
+																		{info.title}
+																	</span>
 																</span>
 																<span className='text-[10px] text-gray-400 line-clamp-1'>
 																	{info.description}
@@ -239,13 +238,7 @@ const Header = () => {
 														Object.keys(categoryData) as CategoryKey[]
 													).map((cat) => {
 														const info = categoryData[cat];
-														let href = "#";
-														if (!info.comingSoon) {
-															if (cat === "OOH") href = "/categories";
-															else if (cat === "Radio")
-																href = "/radio";
-															else if (cat === "PR") href = "/pr";
-														}
+														const href = info.comingSoon ? "#" : info.href;
 
 														return (
 															<Link
@@ -258,7 +251,13 @@ const Header = () => {
 																		: "text-gray-600 hover:bg-white hover:text-primary-purple hover:shadow-sm"
 																}`}
 															>
-																<span>{info.title}</span>
+																<span className='flex items-center gap-2'>
+																	<Icon
+																		icon={info.icon}
+																		className='h-4 w-4 text-primary-purple'
+																	/>
+																	{info.title}
+																</span>
 																{info.comingSoon && (
 																	<span className='text-[10px] uppercase font-bold bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded'>
 																		Soon

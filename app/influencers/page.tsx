@@ -1,6 +1,8 @@
 "use client";
-import { influencers } from "@/utils/data";
+import { influencers } from "@/utils/mediaCatalog";
 import ListSpace from "@/components/ListSpace";
+import CategorySwitcher from "@/components/categories/CategorySwitcher";
+import CategoryWaitlist from "@/components/categories/CategoryWaitlist";
 import { Icon } from "@iconify/react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -42,8 +44,6 @@ const InfluencersPage = () => {
 			<div className='relative bg-gradient-to-br from-gray-900 via-black to-gray-800 py-24 md:py-32 px-6 text-center text-white overflow-hidden'>
 				{/* Background Elements */}
 				<div className='absolute inset-0 opacity-20 pattern-dots'></div>
-				<div className='absolute -left-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl'></div>
-				<div className='absolute -right-20 -bottom-20 w-80 h-80 bg-gray-500/20 rounded-full blur-3xl'></div>
 
 				{/* Floating Icons */}
 				<div
@@ -68,7 +68,7 @@ const InfluencersPage = () => {
 				<div className='relative z-10 max-w-4xl mx-auto space-y-8'>
 					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-gray-200 animate-fadeIn'>
 						<span className='flex h-2 w-2 rounded-full bg-green-400 animate-pulse'></span>
-						700+ Top Influencers Available
+						Influencer inventory syncing from CMS
 					</div>
 
 					<h1 className='text-5xl md:text-7xl font-extrabold tracking-tight animate-slideUp'>
@@ -79,7 +79,8 @@ const InfluencersPage = () => {
 					</h1>
 
 					<p className='text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
-						Connect with top content creators and influencers to amplify your brand's reach and engagement.
+						Connect with top content creators and influencers to amplify
+						your brand&apos;s reach and engagement.
 					</p>
 
 					{/* Search Bar */}
@@ -129,6 +130,8 @@ const InfluencersPage = () => {
 				</div>
 			</div>
 
+			<CategorySwitcher activeHref='/influencers' />
+
 			{/* Content Section */}
 			<main
 				className='flex-1 max-w-7xl mx-auto w-full px-6 py-12'
@@ -145,25 +148,13 @@ const InfluencersPage = () => {
 				</div>
 
 				{filteredInfluencers.length === 0 ? (
-					<div className='flex flex-col items-center justify-center py-20 text-center'>
-						<Icon
-							icon='mdi:account-group-outline'
-							className='w-16 h-16 text-gray-300 mb-4'
-						/>
-						<h3 className='text-xl font-semibold text-gray-900 mb-2'>
-							No influencers found
-						</h3>
-						<p className='text-gray-500'>
-							We couldn't find any influencers matching "
-							{searchTerm}"
-						</p>
-						<button
-							onClick={() => setSearchTerm("")}
-							className='mt-6 text-orange-500 font-semibold hover:underline'
-						>
-							View all influencers
-						</button>
-					</div>
+					<CategoryWaitlist
+						icon='mdi:account-star'
+						title='Influencer inventory is being synced'
+						description='Influencers now have a dedicated page ready for the Sanity catalogue, creator filters and pricing cards. Request a quote while the live creator list is connected.'
+						searchTerm={searchTerm}
+						accentClassName='text-orange-500'
+					/>
 				) : (
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 						{filteredInfluencers.map((influencer) => {

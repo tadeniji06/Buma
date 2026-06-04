@@ -1,6 +1,5 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { logo } from "@/assets";
-import { headerLinks } from "@/utils/data";
+import { headerLinks } from "@/utils/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -14,7 +13,7 @@ const Footer = () => {
 						<div className='mb-6'>
 							<Image width={200} alt='logo' src={logo} />
 							<p className='text-lg font-medium text-white mb-4'>
-								... Africa's No.1 Media Buying MarketPlace
+								... Africa&apos;s No.1 Media Buying MarketPlace
 							</p>
 						</div>
 						<div className='text-sm leading-relaxed text-gray-300'>
@@ -25,7 +24,7 @@ const Footer = () => {
 							</p>
 							<p>
 								Business is fragmented in Africa. programmatic
-								advertising hasn't been able to solve it. Enter buma,
+								advertising hasn&apos;t been able to solve it. Enter buma,
 								the ultimate media place that aggregates media in
 								Africa from Radio, TV, PR and influencer marketing
 							</p>

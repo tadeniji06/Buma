@@ -1,76 +1,111 @@
 "use client";
-import { Billboard } from "@/types/billboard";
+
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import { bbill } from "@/assets";
+import { Billboard } from "@/types/billboard";
 
 interface BillboardModalProps {
 	billboard: Billboard | null;
 	onClose: () => void;
 }
 
-const BillboardModal = ({
-	billboard,
-	onClose,
-}: BillboardModalProps) => {
+const formatLabel = (value?: string) => {
+	if (!value) return "Not specified";
+
+	return value
+		.split(":")
+		.pop()
+		?.replace(/_/g, " ")
+		.replace(/\b\w/g, (char) => char.toUpperCase()) || value;
+};
+
+const formatPrice = (billboard: Billboard) => {
+	const amount =
+		billboard.pricing?.priceWithMarkup ?? billboard.pricing?.basePrice;
+
+	if (typeof amount !== "number") return "Request quote";
+
+	const currency = (billboard.pricing?.currency || "ngn").toUpperCase();
+
+	return new Intl.NumberFormat("en-NG", {
+		style: "currency",
+		currency,
+		maximumFractionDigits: 0,
+	}).format(amount);
+};
+
+const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 	if (!billboard) return null;
 
+	const imageSrc = billboard.image || bbill;
+	const details = [
+		["Display Type", formatLabel(billboard.displayType)],
+		["Billboard Size", formatLabel(billboard.billboardSize)],
+		["Dimensions", billboard.billboardDimensions || "Not specified"],
+		["Location", formatLabel(billboard.cityState)],
+		["Country", formatLabel(billboard.country)],
+		["Availability", formatLabel(billboard.availability)],
+		["Price", formatPrice(billboard)],
+	];
+
 	return (
-		<div className='fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4'>
-			<div className='bg-white rounded-2xl shadow-lg max-w-lg w-full overflow-hidden animate-fade-in'>
-				{/* Header */}
-				<div className='flex justify-between items-center border-b p-4'>
-					<h2 className='text-lg font-semibold text-gray-800'>
-						{billboard.area || "Billboard Details"}
-					</h2>
+		<div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6'>
+			<div className='max-h-[92vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl animate-fadeIn'>
+				<div className='flex items-start justify-between gap-4 border-b border-gray-100 p-5'>
+					<div>
+						<p className='text-xs font-bold uppercase tracking-[0.18em] text-primary-purple'>
+							OOH Billboard
+						</p>
+						<h2 className='mt-1 text-xl font-bold text-gray-950'>
+							{billboard.name}
+						</h2>
+					</div>
 					<button
+						type='button'
 						onClick={onClose}
-						className='p-2 rounded-full hover:bg-gray-100 transition'
+						className='rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900'
+						aria-label='Close billboard details'
 					>
-						<Icon
-							icon='mdi:close'
-							className='text-xl text-gray-600'
-						/>
+						<Icon icon='mdi:close' className='text-2xl' />
 					</button>
 				</div>
 
-				{/* Image */}
-				<div className='relative w-full h-60'>
-					<Image
-						src={billboard.image}
-						alt={billboard.area || "Billboard"}
-						fill
-						className='object-cover'
-					/>
-				</div>
+				<div className='max-h-[calc(92vh-88px)] overflow-y-auto'>
+					<div className='relative h-72 w-full bg-gray-100'>
+						<Image
+							src={imageSrc}
+							alt={billboard.name}
+							fill
+							className='object-cover'
+						/>
+					</div>
 
-				{/* Details */}
-				<div className='p-5 space-y-2'>
-					<p className='text-sm text-gray-600'>
-						<span className='font-medium text-gray-800'>Size:</span>{" "}
-						{billboard.size || "N/A"}
-					</p>
+					<div className='space-y-5 p-5'>
+						<div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
+							{details.map(([label, value]) => (
+								<div key={label} className='rounded-xl bg-gray-50 p-4'>
+									<p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+										{label}
+									</p>
+									<p className='mt-1 text-sm font-semibold text-gray-900'>
+										{value}
+									</p>
+								</div>
+							))}
+						</div>
 
-					<p className='text-sm'>
-						<span className='font-medium text-gray-800'>Status:</span>{" "}
-						<span
-							className={`${
-								billboard.status === "available"
-									? "text-green-600"
-									: billboard.status === "booked"
-									? "text-red-500"
-									: "text-yellow-600"
-							} font-medium`}
-						>
-							{billboard.status.charAt(0).toUpperCase() +
-								billboard.status.slice(1)}
-						</span>
-					</p>
-
-					{billboard.description && (
-						<p className='text-sm text-gray-700 leading-relaxed pt-3 border-t'>
-							{billboard.description}
-						</p>
-					)}
+						{billboard.description && (
+							<div className='rounded-xl border border-gray-100 p-4'>
+								<h3 className='text-sm font-bold text-gray-950'>
+									Description
+								</h3>
+								<p className='mt-2 text-sm leading-6 text-gray-600'>
+									{billboard.description}
+								</p>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

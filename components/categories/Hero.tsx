@@ -12,7 +12,7 @@ const Hero = ({ onSearch }: HeroProps) => {
 	const [location, setLocation] = useState("");
 
 	const handleSearch = () => {
-		onSearch(location.trim().toLowerCase());
+		onSearch(location.trim());
 	};
 
 	return (
@@ -22,7 +22,7 @@ const Hero = ({ onSearch }: HeroProps) => {
 				alt="Hero Background"
 				priority
 				fill
-				className="object-fit"
+				className="object-cover"
 				// style={{ zIndex: -2 }}
 			/>
 			<div className="absolute inset-0 bg-black/40" />

@@ -1,19 +1,18 @@
 export interface Billboard {
-  _id: string;
-  image: string;
-  size?: string;
-  status: "available" | "booked" | "maintenance";
-  description?: string;
-  area?: string;
-}
-
-export interface Region {
-  name: string;
-  billboards: Billboard[];
-}
-
-export interface Vendor {
-  _id: string;
-  name: string;
-  regions: Region[];
+	_id: string;
+	name: string;
+	image?: string;
+	images?: string[];
+	description?: string;
+	displayType?: string;
+	billboardSize?: string;
+	billboardDimensions?: string;
+	availability: "available" | "booked" | "reserved" | "maintenance";
+	country?: string;
+	cityState?: string;
+	pricing?: {
+		currency?: string;
+		basePrice?: number;
+		priceWithMarkup?: number;
+	};
 }

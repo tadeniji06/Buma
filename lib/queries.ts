@@ -1,16 +1,20 @@
-export const GET_VENDORS_WITH_BILLBOARDS = `
-*[_type == "vendor"]{
+export const GET_BILLBOARDS = `
+*[_type == "billboard"] | order(_createdAt desc) {
   _id,
   name,
-  regions[] {
-    name,
-    billboards[] {
-      area,
-      size,
-      status,
-      "image": images[0].asset->url,
-      description
-    }
+  "image": images[0].asset->url,
+  "images": images[].asset->url,
+  description,
+  displayType,
+  billboardSize,
+  billboardDimensions,
+  availability,
+  country,
+  cityState,
+  pricing {
+    currency,
+    basePrice,
+    priceWithMarkup
   }
 }
 `;

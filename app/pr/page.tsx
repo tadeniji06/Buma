@@ -1,8 +1,9 @@
 "use client";
-import { prPlatforms } from "@/utils/data";
+import { prPlatforms } from "@/utils/mediaCatalog";
 import ListSpace from "@/components/ListSpace";
+import CategorySwitcher from "@/components/categories/CategorySwitcher";
+import CategoryWaitlist from "@/components/categories/CategoryWaitlist";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 import { useState } from "react";
 
 const PRPage = () => {
@@ -18,11 +19,15 @@ const PRPage = () => {
 			<div className='relative bg-primary-purple py-20 px-6 text-center text-white overflow-hidden'>
 				<div className='absolute inset-0 opacity-10 pattern-dots'></div>
 				<div className='relative z-10 max-w-4xl mx-auto space-y-6'>
+					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-purple-100 animate-fadeIn'>
+						<span className='flex h-2 w-2 rounded-full bg-green-400 animate-pulse'></span>
+						PR inventory syncing from CMS
+					</div>
 					<h1 className='text-4xl md:text-5xl font-bold animate-fadeIn'>
 						PR & Media Platforms
 					</h1>
 					<p className='text-xl md:text-2xl text-purple-100 max-w-2xl mx-auto'>
-						Amplify your brand voice through Nigeria's leading news
+						Amplify your brand voice through Nigeria&apos;s leading news
 						and media outlets.
 					</p>
 
@@ -43,6 +48,8 @@ const PRPage = () => {
 				</div>
 			</div>
 
+			<CategorySwitcher activeHref='/pr' />
+
 			{/* Content Section */}
 			<main className='flex-1 max-w-7xl mx-auto w-full px-6 py-12'>
 				<div className='flex justify-between items-center mb-8'>
@@ -56,28 +63,15 @@ const PRPage = () => {
 				</div>
 
 				{filteredPlatforms.length === 0 ? (
-					<div className='flex flex-col items-center justify-center py-20 text-center'>
-						<Icon
-							icon='mdi:newspaper-variant-outline'
-							className='w-16 h-16 text-gray-300 mb-4'
-						/>
-						<h3 className='text-xl font-semibold text-gray-900 mb-2'>
-							No platforms found
-						</h3>
-						<p className='text-gray-500'>
-							We couldn't find any media platform matching "
-							{searchTerm}"
-						</p>
-						<button
-							onClick={() => setSearchTerm("")}
-							className='mt-6 text-primary-purple font-semibold hover:underline'
-						>
-							View all platforms
-						</button>
-					</div>
+					<CategoryWaitlist
+						icon='mdi:newspaper-variant-outline'
+						title='PR media inventory is being synced'
+						description='PR and publication placements now have a separate page ready for their CMS catalogue. Request a quote while the live outlet list is connected.'
+						searchTerm={searchTerm}
+					/>
 				) : (
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-						{filteredPlatforms.map((platform, index) => {
+						{filteredPlatforms.map((platform) => {
 							// Find the original index for ranking if filtering
 							const originalRank = prPlatforms.indexOf(platform) + 1;
 
