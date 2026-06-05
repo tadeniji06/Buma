@@ -13,7 +13,6 @@ export const GET_BILLBOARDS = `
   cityState,
   pricing {
     currency,
-    basePrice,
     priceWithMarkup
   }
 }
@@ -33,7 +32,6 @@ export const GET_RADIO_STATIONS = `
     timeBand,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
@@ -42,7 +40,6 @@ export const GET_RADIO_STATIONS = `
     timeBand,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
@@ -51,7 +48,6 @@ export const GET_RADIO_STATIONS = `
     timeBand,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
@@ -60,7 +56,6 @@ export const GET_RADIO_STATIONS = `
     timeBand,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
@@ -69,13 +64,11 @@ export const GET_RADIO_STATIONS = `
     timeBand,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
   onAirHypePricing {
     currency,
-    basePrice,
     priceWithMarkup
   },
   "onAirHypePricingItems": onAirHypePricing[] {
@@ -84,7 +77,6 @@ export const GET_RADIO_STATIONS = `
     wordCount,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },
@@ -92,7 +84,6 @@ export const GET_RADIO_STATIONS = `
     belt,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   }
@@ -109,7 +100,6 @@ export const GET_INFLUENCERS = `
     description,
     pricing {
       currency,
-      basePrice,
       priceWithMarkup
     }
   },

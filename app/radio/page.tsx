@@ -393,7 +393,7 @@ const RadioPage = () => {
 											</div>
 											<div className='rounded-xl border border-gray-100 bg-gray-50 p-3'>
 												<p className='mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400'>
-													From
+													Price
 												</p>
 												<p className='text-sm font-bold text-gray-800'>
 													{formatRadioLowestPrice(station)}

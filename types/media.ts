@@ -1,6 +1,5 @@
 export interface Pricing {
 	currency?: string;
-	basePrice?: number;
 	priceWithMarkup?: number;
 }
 

@@ -12,20 +12,6 @@ import { Influencer } from "@/types/media";
 import { logo as defaultLogo } from "@/assets";
 import { formatLabel, formatPriceValue } from "@/components/mediaFormatters";
 
-const formatPrice = (influencer: Influencer) => {
-	const prices = (influencer.postPricing || [])
-		.map((item) => item.pricing?.priceWithMarkup ?? item.pricing?.basePrice)
-		.filter((price): price is number => typeof price === "number");
-
-	if (!prices.length) return "Request quote";
-
-	return new Intl.NumberFormat("en-NG", {
-		style: "currency",
-		currency: "NGN",
-		maximumFractionDigits: 0,
-	}).format(Math.min(...prices));
-};
-
 const primaryFollowers = (influencer: Influencer) => {
 	const metrics = [
 		["Instagram", influencer.igFollowers],
@@ -157,25 +143,11 @@ const InfluencerDetailModal = ({
 												{formatPriceValue(item.pricing)}
 											</p>
 										</div>
-										<div className='grid grid-cols-2 gap-2 text-xs'>
-											<div className='rounded-lg bg-white p-2'>
-												<p className='text-gray-400'>Base</p>
-												<p className='font-bold text-gray-800'>
-													{formatPriceValue({
-														currency: item.pricing?.currency,
-														basePrice: item.pricing?.basePrice,
-													})}
-												</p>
-											</div>
-											<div className='rounded-lg bg-white p-2'>
-												<p className='text-gray-400'>With Markup</p>
-												<p className='font-bold text-gray-800'>
-													{formatPriceValue({
-														currency: item.pricing?.currency,
-														priceWithMarkup: item.pricing?.priceWithMarkup,
-													})}
-												</p>
-											</div>
+										<div className='rounded-lg bg-white p-2 text-xs'>
+											<p className='text-gray-400'>Price</p>
+											<p className='font-bold text-gray-800'>
+												{formatPriceValue(item.pricing)}
+											</p>
 										</div>
 									</div>
 								))}
@@ -411,14 +383,18 @@ const InfluencersPage = () => {
 													{followers}
 												</p>
 											</div>
-											<div className='rounded-xl border border-orange-100/50 bg-orange-50 p-3'>
+											<button
+												type='button'
+												onClick={() => setSelectedInfluencer(influencer)}
+												className='rounded-xl border border-orange-100/50 bg-orange-50 p-3 text-left transition hover:border-orange-300 hover:bg-orange-100'
+											>
 												<p className='mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-500'>
-													From
+													Rates
 												</p>
 												<p className='text-base font-bold text-gray-900'>
-													{formatPrice(influencer)}
+													View full prices
 												</p>
-											</div>
+											</button>
 										</div>
 
 										<div className='relative z-10 mb-6 grid grid-cols-2 gap-2 text-xs text-gray-500'>
@@ -447,7 +423,7 @@ const InfluencersPage = () => {
 										className='relative z-10 mb-3 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-800 transition hover:border-orange-500 hover:text-orange-500'
 									>
 										<Icon icon='mdi:account-details-outline' className='h-5 w-5' />
-										View profile details
+										View profile & rates
 									</button>
 
 									<a

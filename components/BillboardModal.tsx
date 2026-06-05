@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { bbill } from "@/assets";
 import { Billboard } from "@/types/billboard";
-import { formatPriceValue } from "./mediaFormatters";
 
 interface BillboardModalProps {
 	billboard: Billboard | null;
@@ -23,8 +22,7 @@ const formatLabel = (value?: string) => {
 };
 
 const formatPrice = (billboard: Billboard) => {
-	const amount =
-		billboard.pricing?.priceWithMarkup ?? billboard.pricing?.basePrice;
+	const amount = billboard.pricing?.priceWithMarkup;
 
 	if (typeof amount !== "number") return "Request quote";
 
@@ -52,7 +50,7 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 		["Location", formatLabel(billboard.cityState)],
 		["Country", formatLabel(billboard.country)],
 		["Availability", formatLabel(billboard.availability)],
-		["Final Price", formatPrice(billboard)],
+		["Price", formatPrice(billboard)],
 	];
 
 	return (
@@ -143,11 +141,9 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 									icon='mdi:cash-multiple'
 									className='h-5 w-5 text-primary-purple'
 								/>
-								<h3 className='text-sm font-bold text-gray-950'>
-									Pricing Breakdown
-								</h3>
+								<h3 className='text-sm font-bold text-gray-950'>Pricing</h3>
 							</div>
-							<div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+							<div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
 								<div className='rounded-lg bg-gray-50 p-3'>
 									<p className='text-xs text-gray-400'>Currency</p>
 									<p className='mt-1 text-sm font-bold text-gray-900'>
@@ -155,21 +151,9 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 									</p>
 								</div>
 								<div className='rounded-lg bg-gray-50 p-3'>
-									<p className='text-xs text-gray-400'>Base Price</p>
+									<p className='text-xs text-gray-400'>Price</p>
 									<p className='mt-1 text-sm font-bold text-gray-900'>
-										{formatPriceValue({
-											currency: billboard.pricing?.currency,
-											basePrice: billboard.pricing?.basePrice,
-										})}
-									</p>
-								</div>
-								<div className='rounded-lg bg-gray-50 p-3'>
-									<p className='text-xs text-gray-400'>With 30% Markup</p>
-									<p className='mt-1 text-sm font-bold text-gray-900'>
-										{formatPriceValue({
-											currency: billboard.pricing?.currency,
-											priceWithMarkup: billboard.pricing?.priceWithMarkup,
-										})}
+										{formatPrice(billboard)}
 									</p>
 								</div>
 							</div>

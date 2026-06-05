@@ -12,7 +12,6 @@ export interface Billboard {
 	cityState?: string;
 	pricing?: {
 		currency?: string;
-		basePrice?: number;
 		priceWithMarkup?: number;
 	};
 }

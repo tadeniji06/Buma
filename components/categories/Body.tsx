@@ -37,8 +37,7 @@ const formatLabel = (value?: string) => {
 };
 
 const formatPrice = (billboard: Billboard) => {
-	const amount =
-		billboard.pricing?.priceWithMarkup ?? billboard.pricing?.basePrice;
+	const amount = billboard.pricing?.priceWithMarkup;
 
 	if (typeof amount !== "number") return "Request quote";
 
@@ -62,7 +61,6 @@ const getSearchText = (billboard: Billboard) =>
 		billboard.country,
 		formatLabel(billboard.cityState),
 		billboard.pricing?.currency,
-		billboard.pricing?.basePrice?.toString(),
 		billboard.pricing?.priceWithMarkup?.toString(),
 	]
 		.filter(Boolean)

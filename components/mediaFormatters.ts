@@ -13,7 +13,7 @@ export const formatLabel = (value?: string) => {
 };
 
 export const formatPriceValue = (pricing?: Pricing) => {
-	const amount = pricing?.priceWithMarkup ?? pricing?.basePrice;
+	const amount = pricing?.priceWithMarkup;
 
 	if (typeof amount !== "number") return "Request quote";
 
@@ -90,7 +90,7 @@ export const getRadioPricingGroups = (station: RadioStation) => [
 export const getLowestRadioPrice = (station: RadioStation) => {
 	const prices = getRadioPricingGroups(station)
 		.flatMap((group) => group.items)
-		.map((item) => item.price?.priceWithMarkup ?? item.price?.basePrice)
+		.map((item) => item.price?.priceWithMarkup)
 		.filter((price): price is number => typeof price === "number");
 
 	if (!prices.length) return undefined;
@@ -105,7 +105,7 @@ export const formatRadioLowestPrice = (station: RadioStation) => {
 	const firstPricing = getRadioPricingGroups(station)
 		.flatMap((group) => group.items)
 		.find((item) => {
-			const price = item.price?.priceWithMarkup ?? item.price?.basePrice;
+			const price = item.price?.priceWithMarkup;
 			return price === amount;
 		})?.price;
 
