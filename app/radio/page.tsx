@@ -10,39 +10,16 @@ import { sanity } from "@/lib/sanity";
 import { GET_RADIO_STATIONS } from "@/lib/queries";
 import { RadioStation } from "@/types/media";
 import { logo as defaultLogo } from "@/assets";
-
-const formatLabel = (value?: string) =>
-	value
-		? value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
-		: "Not specified";
+import {
+	countRadioRateCards,
+	formatLabel,
+	formatPriceValue,
+	formatRadioLowestPrice,
+	getRadioPricingGroups,
+} from "@/components/mediaFormatters";
 
 const formatNumber = (value?: number) =>
 	typeof value === "number" ? new Intl.NumberFormat("en-NG").format(value) : "N/A";
-
-const formatPrice = (station: RadioStation) => {
-	const pricingGroups = [
-		station.spotAdvertPricing,
-		station.announcementPricing,
-		station.jinglesPricing,
-		station.liveAppearancePricing,
-		station.sponsoredProgrammePricing,
-		station.onAirHypePricing,
-		station.beltPricing,
-	];
-
-	const prices = pricingGroups
-		.flatMap((group) => group || [])
-		.map((item) => item.pricing?.priceWithMarkup ?? item.pricing?.basePrice)
-		.filter((price): price is number => typeof price === "number");
-
-	if (!prices.length) return "Request quote";
-
-	return new Intl.NumberFormat("en-NG", {
-		style: "currency",
-		currency: "NGN",
-		maximumFractionDigits: 0,
-	}).format(Math.min(...prices));
-};
 
 const RadioSkeleton = () => (
 	<div className='rounded-2xl border border-gray-100 bg-white p-6 shadow-sm'>
@@ -60,8 +37,158 @@ const RadioSkeleton = () => (
 	</div>
 );
 
+const RadioDetailModal = ({
+	station,
+	onClose,
+}: {
+	station: RadioStation | null;
+	onClose: () => void;
+}) => {
+	if (!station) return null;
+
+	const pricingGroups = getRadioPricingGroups(station);
+	const message = encodeURIComponent(
+		`Hi, I'm interested in placing ads on ${station.name}`,
+	);
+	const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
+
+	return (
+		<div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6'>
+			<div className='max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl animate-fadeIn'>
+				<div className='flex items-start justify-between gap-4 border-b border-gray-100 p-5'>
+					<div className='flex items-center gap-4'>
+						<div className='flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white p-1 shadow-sm'>
+							<Image
+								src={station.logo || station.image || defaultLogo}
+								alt={station.name}
+								width={64}
+								height={64}
+								className='h-full w-full object-contain'
+							/>
+						</div>
+						<div>
+							<p className='text-xs font-bold uppercase tracking-[0.18em] text-primary-purple'>
+								Radio Station
+							</p>
+							<h2 className='mt-1 text-xl font-bold text-gray-950'>
+								{station.name}
+							</h2>
+						</div>
+					</div>
+					<button
+						type='button'
+						onClick={onClose}
+						className='rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900'
+						aria-label='Close radio details'
+					>
+						<Icon icon='mdi:close' className='text-2xl' />
+					</button>
+				</div>
+
+				<div className='max-h-[calc(92vh-96px)] overflow-y-auto p-5'>
+					<div className='mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3'>
+						<div className='rounded-xl bg-gray-50 p-4'>
+							<p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+								Listenership
+							</p>
+							<p className='mt-1 text-sm font-bold text-gray-900'>
+								{formatNumber(station.listenership)}
+							</p>
+						</div>
+						<div className='rounded-xl bg-gray-50 p-4'>
+							<p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+								Coverage
+							</p>
+							<p className='mt-1 text-sm font-bold text-gray-900'>
+								{station.coverage?.join(", ") || "Not specified"}
+							</p>
+						</div>
+						<div className='rounded-xl bg-gray-50 p-4'>
+							<p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+								Rate Cards
+							</p>
+							<p className='mt-1 text-sm font-bold text-gray-900'>
+								{countRadioRateCards(station)}
+							</p>
+						</div>
+					</div>
+
+					{station.programmes?.length ? (
+						<section className='mb-5 rounded-xl border border-gray-100 p-4'>
+							<h3 className='mb-3 text-sm font-bold text-gray-950'>
+								Programmes
+							</h3>
+							<div className='flex flex-wrap gap-2'>
+								{station.programmes.map((programme) => (
+									<span
+										key={programme}
+										className='rounded-full bg-accent-purple px-3 py-1 text-xs font-semibold text-primary-purple'
+									>
+										{programme}
+									</span>
+								))}
+							</div>
+						</section>
+					) : null}
+
+					<div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+						{pricingGroups.map((group) => (
+							<section
+								key={group.title}
+								className='rounded-xl border border-gray-100 p-4'
+							>
+								<div className='mb-3 flex items-center gap-2'>
+									<Icon
+										icon={group.icon}
+										className='h-5 w-5 text-primary-purple'
+									/>
+									<h3 className='text-sm font-bold text-gray-950'>
+										{group.title}
+									</h3>
+								</div>
+								{group.items.length ? (
+									<div className='space-y-2'>
+										{group.items.map((item) => (
+											<div
+												key={`${group.title}-${item.label}`}
+												className='flex items-center justify-between gap-4 rounded-lg bg-gray-50 px-3 py-2'
+											>
+												<span className='text-sm font-medium text-gray-700'>
+													{item.label}
+												</span>
+												<span className='text-sm font-bold text-gray-950'>
+													{formatPriceValue(item.price)}
+												</span>
+											</div>
+										))}
+									</div>
+								) : (
+									<p className='text-sm text-gray-400'>No price entered</p>
+								)}
+							</section>
+						))}
+					</div>
+
+					<a
+						href={whatsappUrl}
+						target='_blank'
+						rel='noopener noreferrer'
+						className='mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary-purple px-4 py-3.5 font-semibold text-white transition hover:bg-primary-purple-dark'
+					>
+						<Icon icon='mdi:whatsapp' className='h-5 w-5' />
+						Request radio plan
+					</a>
+				</div>
+			</div>
+		</div>
+	);
+};
+
 const RadioPage = () => {
 	const [stations, setStations] = useState<RadioStation[]>([]);
+	const [selectedStation, setSelectedStation] = useState<RadioStation | null>(
+		null,
+	);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState("");
@@ -94,6 +221,10 @@ const RadioPage = () => {
 				...(station.coverage || []),
 				...(station.programmes || []),
 				station.listenership?.toString(),
+				...getRadioPricingGroups(station).flatMap((group) => [
+					group.title,
+					...group.items.map((item) => item.label),
+				]),
 			]
 				.filter(Boolean)
 				.join(" ")
@@ -265,7 +396,7 @@ const RadioPage = () => {
 													From
 												</p>
 												<p className='text-sm font-bold text-gray-800'>
-													{formatPrice(station)}
+													{formatRadioLowestPrice(station)}
 												</p>
 											</div>
 										</div>
@@ -282,6 +413,15 @@ const RadioPage = () => {
 										</div>
 									</div>
 
+									<button
+										type='button'
+										onClick={() => setSelectedStation(station)}
+										className='relative z-10 mb-3 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-800 transition hover:border-primary-purple hover:text-primary-purple'
+									>
+										<Icon icon='mdi:table-eye' className='h-5 w-5' />
+										View full rate card
+									</button>
+
 									<a
 										href={whatsappUrl}
 										target='_blank'
@@ -297,6 +437,11 @@ const RadioPage = () => {
 					</div>
 				)}
 			</main>
+
+			<RadioDetailModal
+				station={selectedStation}
+				onClose={() => setSelectedStation(null)}
+			/>
 
 			<ListSpace />
 		</div>

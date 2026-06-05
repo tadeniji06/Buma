@@ -29,6 +29,7 @@ export const GET_RADIO_STATIONS = `
   programmes,
   listenership,
   spotAdvertPricing[] {
+    duration,
     timeBand,
     pricing {
       currency,
@@ -37,6 +38,7 @@ export const GET_RADIO_STATIONS = `
     }
   },
   announcementPricing[] {
+    wordCount,
     timeBand,
     pricing {
       currency,
@@ -45,6 +47,7 @@ export const GET_RADIO_STATIONS = `
     }
   },
   jinglesPricing[] {
+    duration,
     timeBand,
     pricing {
       currency,
@@ -53,6 +56,7 @@ export const GET_RADIO_STATIONS = `
     }
   },
   liveAppearancePricing[] {
+    duration,
     timeBand,
     pricing {
       currency,
@@ -61,6 +65,7 @@ export const GET_RADIO_STATIONS = `
     }
   },
   sponsoredProgrammePricing[] {
+    duration,
     timeBand,
     pricing {
       currency,
@@ -68,8 +73,15 @@ export const GET_RADIO_STATIONS = `
       priceWithMarkup
     }
   },
-  onAirHypePricing[] {
+  onAirHypePricing {
+    currency,
+    basePrice,
+    priceWithMarkup
+  },
+  "onAirHypePricingItems": onAirHypePricing[] {
+    duration,
     timeBand,
+    wordCount,
     pricing {
       currency,
       basePrice,

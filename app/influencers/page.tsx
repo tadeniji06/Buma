@@ -10,11 +10,7 @@ import { sanity } from "@/lib/sanity";
 import { GET_INFLUENCERS } from "@/lib/queries";
 import { Influencer } from "@/types/media";
 import { logo as defaultLogo } from "@/assets";
-
-const formatLabel = (value?: string) =>
-	value
-		? value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
-		: "Not specified";
+import { formatLabel, formatPriceValue } from "@/components/mediaFormatters";
 
 const formatPrice = (influencer: Influencer) => {
 	const prices = (influencer.postPricing || [])
@@ -57,8 +53,157 @@ const InfluencerSkeleton = () => (
 	</div>
 );
 
+const InfluencerDetailModal = ({
+	influencer,
+	onClose,
+}: {
+	influencer: Influencer | null;
+	onClose: () => void;
+}) => {
+	if (!influencer) return null;
+
+	const metrics = [
+		["Instagram Followers", influencer.igFollowers, "mdi:instagram"],
+		["Facebook Followers", influencer.facebookFollowers, "mdi:facebook"],
+		["YouTube Subscribers", influencer.ytSubscribers, "mdi:youtube"],
+		["YouTube Views", influencer.ytViews, "mdi:eye-outline"],
+		["TikTok Followers", influencer.tiktokFollowers, "mdi:music-note"],
+	];
+	const message = encodeURIComponent(
+		`Hi, I'm interested in working with ${influencer.name} for an influencer marketing campaign.`,
+	);
+	const whatsappUrl = `https://wa.me/2348064968725?text=${message}`;
+
+	return (
+		<div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6'>
+			<div className='max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl animate-fadeIn'>
+				<div className='flex items-start justify-between gap-4 border-b border-gray-100 p-5'>
+					<div className='flex items-center gap-4'>
+						<div className='flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-orange-100 bg-white p-0.5 shadow-sm'>
+							<Image
+								src={influencer.image || defaultLogo}
+								alt={influencer.name}
+								width={64}
+								height={64}
+								className='h-full w-full rounded-full object-cover'
+							/>
+						</div>
+						<div>
+							<p className='text-xs font-bold uppercase tracking-[0.18em] text-orange-500'>
+								{formatLabel(influencer.category)} Influencer
+							</p>
+							<h2 className='mt-1 text-xl font-bold text-gray-950'>
+								{influencer.name}
+							</h2>
+						</div>
+					</div>
+					<button
+						type='button'
+						onClick={onClose}
+						className='rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900'
+						aria-label='Close influencer details'
+					>
+						<Icon icon='mdi:close' className='text-2xl' />
+					</button>
+				</div>
+
+				<div className='max-h-[calc(92vh-96px)] overflow-y-auto p-5'>
+					<div className='mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5'>
+						{metrics.map(([label, value, icon]) => (
+							<div key={label} className='rounded-xl bg-orange-50 p-4'>
+								<div className='mb-2 flex items-center gap-2 text-orange-500'>
+									<Icon icon={icon} className='h-4 w-4' />
+									<p className='text-[10px] font-semibold uppercase tracking-wide text-gray-500'>
+										{label}
+									</p>
+								</div>
+								<p className='text-sm font-bold text-gray-900'>
+									{value || "N/A"}
+								</p>
+							</div>
+						))}
+					</div>
+
+					<section className='rounded-xl border border-gray-100 p-4'>
+						<div className='mb-3 flex items-center justify-between gap-4'>
+							<h3 className='text-sm font-bold text-gray-950'>
+								Posts & Pricing
+							</h3>
+							<span className='rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-600'>
+								{influencer.postPricing?.length || 0} deliverable
+								{(influencer.postPricing?.length || 0) === 1 ? "" : "s"}
+							</span>
+						</div>
+
+						{influencer.postPricing?.length ? (
+							<div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
+								{influencer.postPricing.map((item) => (
+									<div
+										key={`${influencer._id}-${item.name}`}
+										className='rounded-xl bg-gray-50 p-4'
+									>
+										<div className='mb-3 flex items-start justify-between gap-4'>
+											<div>
+												<p className='font-bold text-gray-950'>
+													{item.name || "Deliverable"}
+												</p>
+												{item.description && (
+													<p className='mt-1 text-sm leading-5 text-gray-500'>
+														{item.description}
+													</p>
+												)}
+											</div>
+											<p className='shrink-0 text-sm font-bold text-gray-950'>
+												{formatPriceValue(item.pricing)}
+											</p>
+										</div>
+										<div className='grid grid-cols-2 gap-2 text-xs'>
+											<div className='rounded-lg bg-white p-2'>
+												<p className='text-gray-400'>Base</p>
+												<p className='font-bold text-gray-800'>
+													{formatPriceValue({
+														currency: item.pricing?.currency,
+														basePrice: item.pricing?.basePrice,
+													})}
+												</p>
+											</div>
+											<div className='rounded-lg bg-white p-2'>
+												<p className='text-gray-400'>With Markup</p>
+												<p className='font-bold text-gray-800'>
+													{formatPriceValue({
+														currency: item.pricing?.currency,
+														priceWithMarkup: item.pricing?.priceWithMarkup,
+													})}
+												</p>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+						) : (
+							<p className='text-sm text-gray-400'>No deliverables entered</p>
+						)}
+					</section>
+
+					<a
+						href={whatsappUrl}
+						target='_blank'
+						rel='noopener noreferrer'
+						className='mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3.5 font-semibold text-white transition hover:bg-orange-600'
+					>
+						<Icon icon='mdi:whatsapp' className='h-5 w-5' />
+						Request influencer plan
+					</a>
+				</div>
+			</div>
+		</div>
+	);
+};
+
 const InfluencersPage = () => {
 	const [influencers, setInfluencers] = useState<Influencer[]>([]);
+	const [selectedInfluencer, setSelectedInfluencer] =
+		useState<Influencer | null>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState("");
@@ -296,6 +441,15 @@ const InfluencersPage = () => {
 										</div>
 									</div>
 
+									<button
+										type='button'
+										onClick={() => setSelectedInfluencer(influencer)}
+										className='relative z-10 mb-3 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-800 transition hover:border-orange-500 hover:text-orange-500'
+									>
+										<Icon icon='mdi:account-details-outline' className='h-5 w-5' />
+										View profile details
+									</button>
+
 									<a
 										href={whatsappUrl}
 										target='_blank'
@@ -311,6 +465,11 @@ const InfluencersPage = () => {
 					</div>
 				)}
 			</main>
+
+			<InfluencerDetailModal
+				influencer={selectedInfluencer}
+				onClose={() => setSelectedInfluencer(null)}
+			/>
 
 			<ListSpace />
 		</div>

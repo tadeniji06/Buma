@@ -5,8 +5,10 @@ export interface Pricing {
 }
 
 export interface RadioPricingItem {
-	timeBand?: string;
 	belt?: string;
+	duration?: string;
+	timeBand?: string;
+	wordCount?: string;
 	pricing?: Pricing;
 }
 
@@ -23,7 +25,8 @@ export interface RadioStation {
 	jinglesPricing?: RadioPricingItem[];
 	liveAppearancePricing?: RadioPricingItem[];
 	sponsoredProgrammePricing?: RadioPricingItem[];
-	onAirHypePricing?: RadioPricingItem[];
+	onAirHypePricing?: Pricing;
+	onAirHypePricingItems?: RadioPricingItem[];
 	beltPricing?: RadioPricingItem[];
 }
 

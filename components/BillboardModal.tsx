@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { bbill } from "@/assets";
 import { Billboard } from "@/types/billboard";
+import { formatPriceValue } from "./mediaFormatters";
 
 interface BillboardModalProps {
 	billboard: Billboard | null;
@@ -36,9 +38,13 @@ const formatPrice = (billboard: Billboard) => {
 };
 
 const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
+	const [activeImageIndex, setActiveImageIndex] = useState(0);
+
 	if (!billboard) return null;
 
-	const imageSrc = billboard.image || bbill;
+	const galleryImages =
+		billboard.images?.length ? billboard.images : billboard.image ? [billboard.image] : [];
+	const imageSrc = galleryImages[activeImageIndex] || billboard.image || bbill;
 	const details = [
 		["Display Type", formatLabel(billboard.displayType)],
 		["Billboard Size", formatLabel(billboard.billboardSize)],
@@ -46,7 +52,7 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 		["Location", formatLabel(billboard.cityState)],
 		["Country", formatLabel(billboard.country)],
 		["Availability", formatLabel(billboard.availability)],
-		["Price", formatPrice(billboard)],
+		["Final Price", formatPrice(billboard)],
 	];
 
 	return (
@@ -82,6 +88,31 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 					</div>
 
 					<div className='space-y-5 p-5'>
+						{galleryImages.length > 1 && (
+							<div className='flex gap-2 overflow-x-auto pb-1'>
+								{galleryImages.map((image, index) => (
+									<button
+										key={image}
+										type='button'
+										onClick={() => setActiveImageIndex(index)}
+										className={`relative h-16 w-20 shrink-0 overflow-hidden rounded-lg border ${
+											index === activeImageIndex
+												? "border-primary-purple"
+												: "border-gray-100"
+										}`}
+										aria-label={`Show billboard image ${index + 1}`}
+									>
+										<Image
+											src={image}
+											alt={`${billboard.name} ${index + 1}`}
+											fill
+											className='object-cover'
+										/>
+									</button>
+								))}
+							</div>
+						)}
+
 						<div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
 							{details.map(([label, value]) => (
 								<div key={label} className='rounded-xl bg-gray-50 p-4'>
@@ -105,6 +136,44 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 								</p>
 							</div>
 						)}
+
+						<div className='rounded-xl border border-gray-100 p-4'>
+							<div className='mb-3 flex items-center gap-2'>
+								<Icon
+									icon='mdi:cash-multiple'
+									className='h-5 w-5 text-primary-purple'
+								/>
+								<h3 className='text-sm font-bold text-gray-950'>
+									Pricing Breakdown
+								</h3>
+							</div>
+							<div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+								<div className='rounded-lg bg-gray-50 p-3'>
+									<p className='text-xs text-gray-400'>Currency</p>
+									<p className='mt-1 text-sm font-bold text-gray-900'>
+										{billboard.pricing?.currency?.toUpperCase() || "N/A"}
+									</p>
+								</div>
+								<div className='rounded-lg bg-gray-50 p-3'>
+									<p className='text-xs text-gray-400'>Base Price</p>
+									<p className='mt-1 text-sm font-bold text-gray-900'>
+										{formatPriceValue({
+											currency: billboard.pricing?.currency,
+											basePrice: billboard.pricing?.basePrice,
+										})}
+									</p>
+								</div>
+								<div className='rounded-lg bg-gray-50 p-3'>
+									<p className='text-xs text-gray-400'>With 30% Markup</p>
+									<p className='mt-1 text-sm font-bold text-gray-900'>
+										{formatPriceValue({
+											currency: billboard.pricing?.currency,
+											priceWithMarkup: billboard.pricing?.priceWithMarkup,
+										})}
+									</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

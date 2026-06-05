@@ -11,13 +11,19 @@ import { sanity } from "@/lib/sanity";
 import { GET_BILLBOARDS } from "@/lib/queries";
 import { Billboard } from "@/types/billboard";
 
-type FilterKey = "displayType" | "billboardSize" | "availability" | "country";
+type FilterKey =
+	| "displayType"
+	| "billboardSize"
+	| "availability"
+	| "country"
+	| "cityState";
 
 const filterLabels: Record<FilterKey, string> = {
 	displayType: "Display Type",
 	billboardSize: "Billboard Size",
 	availability: "Availability",
 	country: "Country",
+	cityState: "City / State",
 };
 
 const formatLabel = (value?: string) => {
@@ -55,6 +61,9 @@ const getSearchText = (billboard: Billboard) =>
 		billboard.availability,
 		billboard.country,
 		formatLabel(billboard.cityState),
+		billboard.pricing?.currency,
+		billboard.pricing?.basePrice?.toString(),
+		billboard.pricing?.priceWithMarkup?.toString(),
 	]
 		.filter(Boolean)
 		.join(" ")
@@ -87,6 +96,7 @@ const Body = () => {
 		billboardSize: [],
 		availability: [],
 		country: [],
+		cityState: [],
 	});
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState("");
@@ -114,6 +124,7 @@ const Body = () => {
 			billboardSize: [],
 			availability: [],
 			country: [],
+			cityState: [],
 		};
 
 		billboards.forEach((billboard) => {
@@ -178,6 +189,7 @@ const Body = () => {
 			billboardSize: [],
 			availability: [],
 			country: [],
+			cityState: [],
 		});
 	};
 
@@ -369,6 +381,18 @@ const Body = () => {
 													<p className='text-xs text-gray-400'>Price</p>
 													<p className='font-semibold text-gray-800'>
 														{formatPrice(billboard)}
+													</p>
+												</div>
+												<div className='rounded-xl bg-gray-50 p-3'>
+													<p className='text-xs text-gray-400'>Dimensions</p>
+													<p className='font-semibold text-gray-800'>
+														{billboard.billboardDimensions || "N/A"}
+													</p>
+												</div>
+												<div className='rounded-xl bg-gray-50 p-3'>
+													<p className='text-xs text-gray-400'>Country</p>
+													<p className='font-semibold text-gray-800'>
+														{formatLabel(billboard.country)}
 													</p>
 												</div>
 											</div>
