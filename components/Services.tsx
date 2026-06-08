@@ -7,7 +7,7 @@ const services = [
 	{
 		title: "Out of Home (OOH)",
 		description:
-			"Billboards, gantries, LEDs and outdoor media from live CMS inventory.",
+			"Billboards, gantries, LEDs and outdoor media for brand visibility.",
 		icon: "mdi:city-variant-outline",
 		link: "/categories",
 		color: "bg-blue-50 text-blue-600",
@@ -16,7 +16,7 @@ const services = [
 	},
 	{
 		title: "Radio Stations",
-		description: "Reach listeners through CMS-backed radio stations and rate cards.",
+		description: "Reach listeners through radio stations and rate cards.",
 		icon: "mdi:radio-tower",
 		link: "/radio",
 		color: "bg-purple-50 text-purple-600",
@@ -44,7 +44,7 @@ const services = [
 	},
 	{
 		title: "Influencer Marketing",
-		description: "Connect with live CMS-backed creator profiles and deliverables.",
+		description: "Connect with creator profiles, audiences and deliverables.",
 		icon: "mdi:account-group-outline",
 		link: "/influencers",
 		color: "bg-orange-50 text-orange-600",

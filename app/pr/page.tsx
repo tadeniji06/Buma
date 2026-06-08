@@ -21,7 +21,7 @@ const PRPage = () => {
 				<div className='relative z-10 max-w-4xl mx-auto space-y-6'>
 					<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-purple-100 animate-fadeIn'>
 						<span className='flex h-2 w-2 rounded-full bg-green-400 animate-pulse'></span>
-						PR inventory syncing from CMS
+						PR media options
 					</div>
 					<h1 className='text-4xl md:text-5xl font-bold animate-fadeIn'>
 						PR & Media Platforms
@@ -65,8 +65,8 @@ const PRPage = () => {
 				{filteredPlatforms.length === 0 ? (
 					<CategoryWaitlist
 						icon='mdi:newspaper-variant-outline'
-						title='PR media inventory is being synced'
-						description='PR and publication placements now have a separate page ready for their CMS catalogue. Request a quote while the live outlet list is connected.'
+						title='No PR platforms available yet'
+						description='Publication options will appear here once they are ready. You can still request a curated PR plan from the team.'
 						searchTerm={searchTerm}
 					/>
 				) : (

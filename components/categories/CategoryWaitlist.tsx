@@ -30,7 +30,7 @@ const CategoryWaitlist = ({
 			</h3>
 			<p className='mx-auto mt-3 max-w-2xl text-sm leading-6 text-gray-500'>
 				{hasSearch
-					? `No CMS item currently matches "${searchTerm}". Clear the search or request a curated quote from the Buma team.`
+					? `No item currently matches "${searchTerm}". Clear the search or request a curated quote from the Buma team.`
 					: description}
 			</p>
 			<div className='mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row'>

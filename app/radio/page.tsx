@@ -251,7 +251,7 @@ const RadioPage = () => {
 				<div className='relative z-10 mx-auto max-w-4xl space-y-8'>
 					<div className='inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-purple-100 backdrop-blur-md'>
 						<span className='flex h-2 w-2 rounded-full bg-green-400'></span>
-						Live from Sanity CMS
+						Radio media options
 					</div>
 
 					<h1 className='text-5xl font-extrabold tracking-tight md:text-7xl'>
@@ -260,7 +260,7 @@ const RadioPage = () => {
 
 					<p className='mx-auto max-w-2xl text-xl leading-relaxed text-purple-100/90 md:text-2xl'>
 						Search live radio stations, coverage areas, programmes and rate
-						options from the CMS.
+						options for your campaign.
 					</p>
 
 					<div className='mx-auto mt-12 max-w-2xl'>
@@ -310,9 +310,6 @@ const RadioPage = () => {
 									} found`}
 						</h2>
 					</div>
-					<span className='text-sm font-medium text-gray-500'>
-						{stations.length} published in CMS
-					</span>
 				</div>
 
 				{error && (
@@ -330,8 +327,8 @@ const RadioPage = () => {
 				) : filteredStations.length === 0 ? (
 					<CategoryWaitlist
 						icon='mdi:radio-tower'
-						title='No radio stations are published yet'
-						description='Published radio station documents will appear here automatically from Sanity.'
+						title='No radio stations available yet'
+						description='Radio station options will appear here once they are ready. You can still request a curated radio plan from the team.'
 						searchTerm={searchTerm}
 					/>
 				) : (
@@ -360,10 +357,6 @@ const RadioPage = () => {
 													height={56}
 													className='h-full w-full object-contain'
 												/>
-											</div>
-											<div className='flex items-center gap-1 rounded-full bg-green-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-green-700'>
-												<Icon icon='mdi:check-decagram' className='h-3.5 w-3.5' />
-												Published
 											</div>
 										</div>
 

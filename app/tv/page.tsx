@@ -28,7 +28,7 @@ const TVPage = () => {
 				<div className='relative z-10 mx-auto max-w-4xl space-y-8'>
 					<div className='inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-purple-100'>
 						<span className='h-2 w-2 rounded-full bg-green-400'></span>
-						TV inventory syncing from CMS
+						TV media options
 					</div>
 
 					<h1 className='text-5xl font-extrabold tracking-tight md:text-7xl'>
@@ -97,15 +97,12 @@ const TVPage = () => {
 							Available TV placements
 						</h2>
 					</div>
-					<span className='text-sm font-medium text-gray-500'>
-						CMS catalogue pending
-					</span>
 				</div>
 
 				<CategoryWaitlist
 					icon='mdi:television-classic'
-					title='TV inventory is being synced'
-					description='TV now has its own page ready for a CMS-backed catalogue, station filters, package cards and quote requests. Request a curated TV plan while the live list is connected.'
+					title='No TV placements available yet'
+					description='TV placements will appear here once they are ready. You can still request a curated TV plan from the team.'
 					searchTerm={searchTerm}
 				/>
 			</main>

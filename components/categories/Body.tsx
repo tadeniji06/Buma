@@ -292,7 +292,7 @@ const Body = () => {
 							</h2>
 						</div>
 						<p className='max-w-xl text-sm leading-6 text-gray-500'>
-							Live inventory from Sanity CMS with search across names,
+							Search across names,
 							locations, display formats, dimensions, availability and pricing.
 						</p>
 					</div>

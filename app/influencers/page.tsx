@@ -241,7 +241,7 @@ const InfluencersPage = () => {
 				<div className='relative z-10 mx-auto max-w-4xl space-y-8'>
 					<div className='inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-gray-200 backdrop-blur-md'>
 						<span className='flex h-2 w-2 rounded-full bg-green-400'></span>
-						Live from Sanity CMS
+						Creator media options
 					</div>
 
 					<h1 className='text-5xl font-extrabold tracking-tight md:text-7xl'>
@@ -250,7 +250,7 @@ const InfluencersPage = () => {
 
 					<p className='mx-auto max-w-2xl text-xl leading-relaxed text-gray-300 md:text-2xl'>
 						Search live creator profiles, audience metrics, platform reach and
-						deliverable pricing from the CMS.
+						deliverable pricing for your campaign.
 					</p>
 
 					<div className='mx-auto mt-12 max-w-2xl'>
@@ -300,9 +300,6 @@ const InfluencersPage = () => {
 									} found`}
 						</h2>
 					</div>
-					<span className='text-sm font-medium text-gray-500'>
-						{influencers.length} published in CMS
-					</span>
 				</div>
 
 				{error && (
@@ -320,8 +317,8 @@ const InfluencersPage = () => {
 				) : filteredInfluencers.length === 0 ? (
 					<CategoryWaitlist
 						icon='mdi:account-star'
-						title='No influencers are published yet'
-						description='Published influencer documents will appear here automatically from Sanity.'
+						title='No influencers available yet'
+						description='Influencer options will appear here once they are ready. You can still request a curated creator plan from the team.'
 						searchTerm={searchTerm}
 						accentClassName='text-orange-500'
 					/>
@@ -349,10 +346,6 @@ const InfluencersPage = () => {
 													height={64}
 													className='h-full w-full rounded-full object-cover'
 												/>
-											</div>
-											<div className='flex items-center gap-1 rounded-full bg-green-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-green-700'>
-												<Icon icon='mdi:check-decagram' className='h-3.5 w-3.5' />
-												Published
 											</div>
 										</div>
 
