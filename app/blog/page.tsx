@@ -21,6 +21,9 @@ export const metadata: Metadata = {
 	},
 };
 
+// Force dynamic rendering on every request for live content updates with zero ISR writes
+export const dynamic = "force-dynamic";
+
 const BlogsPage = () => {
 	return <BlogPostsClient />;
 };

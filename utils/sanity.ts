@@ -34,7 +34,8 @@ export interface BlogPost {
 export const client = createClient({
 	projectId: "28xmzroq",
 	dataset: "production",
-	useCdn: true,
+	// useCdn: false ensures freshly published content is always returned live
+	useCdn: false,
 	apiVersion: "2023-05-03",
 });
 
@@ -158,5 +159,10 @@ export const getBlogPostsForSitemap = async () => {
     slug,
     publishedAt
   }`;
-	return await client.fetch(query);
+	try {
+		return await client.fetch(query);
+	} catch (error) {
+		console.error("Failed to fetch blog posts for sitemap:", error);
+		return [];
+	}
 };

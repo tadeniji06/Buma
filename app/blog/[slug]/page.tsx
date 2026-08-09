@@ -51,6 +51,9 @@ export async function generateMetadata({
 	};
 }
 
+// Force dynamic rendering on every request for live content updates with zero ISR writes
+export const dynamic = "force-dynamic";
+
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 	const { slug } = await params;
 	const post = await getBlogPost(slug);
