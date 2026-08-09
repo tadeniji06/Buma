@@ -41,7 +41,7 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client);
 export const urlFor = (source: SanityImageSource) =>
-	builder.image(source);
+	builder.image(source).auto("format");
 
 // Query functions with proper typing
 export const getBlogPosts = async (
