@@ -111,3 +111,98 @@ export const GET_INFLUENCERS = `
   category
 }
 `;
+
+export const GET_TV_STATIONS = `
+*[_type == "tvStation"] | order(_createdAt desc) {
+  _id,
+  name,
+  "logo": logo.asset->url,
+  category,
+  viewership,
+  programmes,
+  coverage,
+  runOfSpotPricing[] {
+    duration,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  },
+  advertSpotPricing[] {
+    duration,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  },
+  liveCoveragePricing[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  },
+  guestAppearancePricing[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  },
+  sponsoredProgrammePricing[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  },
+  announcementPricing[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  }
+}
+`;
+
+export const GET_NEWS_OUTLETS = `
+*[_type == "newsOutlet"] | order(_createdAt desc) {
+  _id,
+  name,
+  "logo": logo.asset->url,
+  category,
+  reach,
+  coverage,
+  placements[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  }
+}
+`;
+
+export const GET_PR_AGENCIES = `
+*[_type == "prAgency"] | order(_createdAt desc) {
+  _id,
+  name,
+  "logo": logo.asset->url,
+  category,
+  coverage,
+  services[] {
+    name,
+    description,
+    pricing {
+      currency,
+      priceWithMarkup
+    }
+  }
+}
+`;

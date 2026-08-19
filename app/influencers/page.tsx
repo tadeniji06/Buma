@@ -13,7 +13,7 @@ import { logo as defaultLogo } from "@/assets";
 import { formatLabel, formatPriceValue } from "@/components/mediaFormatters";
 
 const primaryFollowers = (influencer: Influencer) => {
-	const metrics = [
+	const metrics: [string, string | undefined][] = [
 		["Instagram", influencer.igFollowers],
 		["TikTok", influencer.tiktokFollowers],
 		["Facebook", influencer.facebookFollowers],
@@ -48,7 +48,7 @@ const InfluencerDetailModal = ({
 }) => {
 	if (!influencer) return null;
 
-	const metrics = [
+	const metrics: [string, string | undefined, string][] = [
 		["Instagram Followers", influencer.igFollowers, "mdi:instagram"],
 		["Facebook Followers", influencer.facebookFollowers, "mdi:facebook"],
 		["YouTube Subscribers", influencer.ytSubscribers, "mdi:youtube"],
