@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import ClarityScript from "@/components/Clarity";
+import NewsletterPopup from "@/components/NewsletterPopup";
 
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { Toaster } from "sonner";
@@ -123,6 +124,7 @@ export default function RootLayout({
 				<ClarityScript />
 				<AnalyticsScript />
 				<FloatingWhatsApp />
+				<NewsletterPopup />
 				<Toaster richColors position='top-right' />
 			</body>
 		</html>
