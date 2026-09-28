@@ -27,7 +27,7 @@ export default function NewsletterPopup() {
 		if (!isOpen) {
 			const timer = setTimeout(() => {
 				setIsOpen(true);
-			}, 5000);
+			}, 120000);
 			return () => clearTimeout(timer);
 		}
 	}, [isOpen, mounted]);
@@ -56,8 +56,8 @@ export default function NewsletterPopup() {
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
-			<div className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden animate-in fade-in zoom-in duration-300">
+		<div className="fixed bottom-4 left-4 z-[9999] w-full max-w-sm p-4 transition-opacity">
+			<div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 w-full relative overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-300">
 				<button
 					onClick={handleClose}
 					className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
@@ -66,17 +66,17 @@ export default function NewsletterPopup() {
 					<X className="w-5 h-5" />
 				</button>
 
-				<div className="p-8">
-					<div className="text-center mb-6">
-						<h2 className="text-2xl font-bold text-gray-900 mb-2">
+				<div className="p-6">
+					<div className="text-center mb-4">
+						<h2 className="text-xl font-bold text-gray-900 mb-1">
 							Join Our Newsletter
 						</h2>
-						<p className="text-gray-600 text-sm">
+						<p className="text-gray-600 text-xs">
 							Get the latest updates, exclusive deals, and insights directly to your inbox.
 						</p>
 					</div>
 
-					<form onSubmit={handleSubmit} className="space-y-4">
+					<form onSubmit={handleSubmit} className="space-y-3">
 						<div>
 							<label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
 								Name
