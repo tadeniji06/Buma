@@ -18,9 +18,6 @@ import {
 	getTvPricingGroups,
 } from "@/components/mediaFormatters";
 
-const formatNumber = (value?: number) =>
-	typeof value === "number" ? new Intl.NumberFormat("en-NG").format(value) : "N/A";
-
 const TvSkeleton = () => (
 	<div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
 		<div className="mb-5 flex items-center justify-between">
@@ -87,10 +84,10 @@ const TvDetailModal = ({
 					<div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
 						<div className="rounded-xl bg-gray-50 p-4">
 							<p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-								Viewership
+								Transmission Type
 							</p>
 							<p className="mt-1 text-sm font-bold text-gray-900">
-								{formatNumber(station.viewership)}
+								{formatLabel(station.transmissionType)}
 							</p>
 						</div>
 						<div className="rounded-xl bg-gray-50 p-4">
@@ -111,6 +108,22 @@ const TvDetailModal = ({
 						</div>
 					</div>
 
+					{station.advertType?.length ? (
+						<section className="mb-5 rounded-xl border border-gray-100 p-4">
+							<h3 className="mb-3 text-sm font-bold text-gray-950">Advert Formats Accepted</h3>
+							<div className="flex flex-wrap gap-2">
+								{station.advertType.map((type) => (
+									<span
+										key={type}
+										className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+									>
+										{formatLabel(type)}
+									</span>
+								))}
+							</div>
+						</section>
+					) : null}
+
 					{station.programmes?.length ? (
 						<section className="mb-5 rounded-xl border border-gray-100 p-4">
 							<h3 className="mb-3 text-sm font-bold text-gray-950">Programmes</h3>
@@ -126,6 +139,40 @@ const TvDetailModal = ({
 							</div>
 						</section>
 					) : null}
+
+					{(station.mediaOwner || station.website || station.contactPerson) && (
+						<section className="mb-5 rounded-xl border border-gray-100 p-4">
+							<h3 className="mb-3 text-sm font-bold text-gray-950">Station Details</h3>
+							<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 text-xs">
+								{station.mediaOwner && (
+									<div>
+										<span className="text-gray-400">Media Owner: </span>
+										<span className="font-semibold text-gray-800">{station.mediaOwner}</span>
+									</div>
+								)}
+								{station.ownershipGroup && (
+									<div>
+										<span className="text-gray-400">Ownership Group: </span>
+										<span className="font-semibold text-gray-800">{station.ownershipGroup}</span>
+									</div>
+								)}
+								{station.website && (
+									<div>
+										<span className="text-gray-400">Website: </span>
+										<a href={station.website} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-purple underline">
+											{station.website}
+										</a>
+									</div>
+								)}
+								{station.contactPerson && (
+									<div>
+										<span className="text-gray-400">Contact Person: </span>
+										<span className="font-semibold text-gray-800">{station.contactPerson} ({station.role || "Manager"})</span>
+									</div>
+								)}
+							</div>
+						</section>
+					)}
 
 					<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 						{pricingGroups.map((group) => (
@@ -213,9 +260,11 @@ const TVPage = () => {
 			[
 				station.name,
 				station.category,
+				station.transmissionType,
+				station.mediaOwner,
 				...(station.coverage || []),
 				...(station.programmes || []),
-				station.viewership?.toString(),
+				...(station.advertType || []),
 				...getTvPricingGroups(station).flatMap((group) => [
 					group.title,
 					...group.items.map((item) => item.label),
@@ -251,7 +300,7 @@ const TVPage = () => {
 					</h1>
 
 					<p className="mx-auto max-w-2xl text-xl leading-relaxed text-purple-100/90 md:text-2xl">
-						Search live TV stations, coverage areas, programmes and rate options for
+						Search live TV stations, transmission types, programmes and rate options for
 						your campaign.
 					</p>
 
@@ -259,7 +308,7 @@ const TVPage = () => {
 						<div className="relative">
 							<input
 								type="text"
-								placeholder="Search stations, coverage or programmes..."
+								placeholder="Search stations, coverage, transmission or programmes..."
 								className="w-full rounded-full bg-white py-5 pl-14 pr-12 text-lg text-gray-900 shadow-2xl transition focus:outline-none focus:ring-4 focus:ring-purple-400/50"
 								value={searchTerm}
 								onChange={(event) => handleSearch(event.target.value)}
@@ -283,7 +332,7 @@ const TVPage = () => {
 
 					<div className="flex flex-wrap justify-center gap-3 text-sm">
 						<span className="text-purple-200/70">Popular:</span>
-						{["National", "State", "Religious", "Sponsored"].map((tag) => (
+						{["National", "Commercial", "Terrestrial", "Satellite", "Sponsored"].map((tag) => (
 							<button
 								key={tag}
 								type="button"
@@ -369,6 +418,12 @@ const TVPage = () => {
 										</h3>
 
 										<div className="relative z-10 mb-6 space-y-2 text-xs text-gray-500">
+											{station.transmissionType && (
+												<p className="flex items-center gap-2">
+													<Icon icon="mdi:access-point" className="h-4 w-4 text-primary-purple" />
+													{formatLabel(station.transmissionType)}
+												</p>
+											)}
 											<p className="flex items-center gap-2">
 												<Icon icon="mdi:map-marker" className="h-4 w-4" />
 												{coverage}
@@ -382,15 +437,15 @@ const TVPage = () => {
 										<div className="relative z-10 mb-6 grid grid-cols-2 gap-2">
 											<div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
 												<p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-													Viewership
+													Category
 												</p>
 												<p className="text-sm font-bold text-gray-800">
-													{formatNumber(station.viewership)}
+													{formatLabel(station.category)}
 												</p>
 											</div>
 											<div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
 												<p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-													From
+													Price From
 												</p>
 												<p className="text-sm font-bold text-gray-800">
 													{formatTvLowestPrice(station)}

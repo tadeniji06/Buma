@@ -7,13 +7,14 @@ import ListSpace from "@/components/ListSpace";
 import CategorySwitcher from "@/components/categories/CategorySwitcher";
 import CategoryWaitlist from "@/components/categories/CategoryWaitlist";
 import { sanity } from "@/lib/sanity";
-import { GET_PR_AGENCIES } from "@/lib/queries";
-import { PrAgency } from "@/types/media";
+import { GET_PR_MEDIA } from "@/lib/queries";
+import { PrMedia } from "@/types/media";
 import { logo as defaultLogo } from "@/assets";
 import {
 	formatLabel,
 	formatPrLowestPrice,
 	formatPriceValue,
+	getPrMediaPricingItems,
 } from "@/components/mediaFormatters";
 
 const PrSkeleton = () => (
@@ -33,28 +34,29 @@ const PrSkeleton = () => (
 );
 
 const PrDetailModal = ({
-	agency,
+	media,
 	onClose,
 }: {
-	agency: PrAgency | null;
+	media: PrMedia | null;
 	onClose: () => void;
 }) => {
-	if (!agency) return null;
+	if (!media) return null;
 
+	const pricingItems = getPrMediaPricingItems(media);
 	const message = encodeURIComponent(
-		`Hi, I am interested in PR services from ${agency.name}`,
+		`Hi, I am interested in PR and media placements with ${media.name}`,
 	);
 	const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6">
-			<div className="max-h-[92vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl animate-fadeIn">
+			<div className="max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl animate-fadeIn">
 				<div className="flex items-start justify-between gap-4 border-b border-gray-100 p-5">
 					<div className="flex items-center gap-4">
 						<div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white p-1 shadow-sm">
 							<Image
-								src={agency.logo || defaultLogo}
-								alt={agency.name}
+								src={media.logo || defaultLogo}
+								alt={media.name}
 								width={64}
 								height={64}
 								className="h-full w-full object-contain"
@@ -62,87 +64,122 @@ const PrDetailModal = ({
 						</div>
 						<div>
 							<p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">
-								{formatLabel(agency.category)} PR
+								{media.mediaCategories?.map(formatLabel).join(", ") || formatLabel(media.category) || "PR x Media"}
 							</p>
-							<h2 className="mt-1 text-xl font-bold text-gray-950">{agency.name}</h2>
+							<h2 className="mt-1 text-xl font-bold text-gray-950">{media.name}</h2>
 						</div>
 					</div>
 					<button
 						type="button"
 						onClick={onClose}
 						className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
-						aria-label="Close PR agency details"
+						aria-label="Close details"
 					>
 						<Icon icon="mdi:close" className="text-2xl" />
 					</button>
 				</div>
 
-				<div className="max-h-[calc(92vh-96px)] overflow-y-auto p-5">
-					<div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+				<div className="max-h-[calc(92vh-96px)] overflow-y-auto p-5 space-y-5">
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 						<div className="rounded-xl bg-gray-50 p-4">
 							<p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-								Markets Served
+								Coverage / Circulation
 							</p>
 							<p className="mt-1 text-sm font-bold text-gray-900">
-								{agency.coverage?.join(", ") || "Not specified"}
+								{media.coverage?.join(", ") || "Not specified"}
 							</p>
 						</div>
 						<div className="rounded-xl bg-gray-50 p-4">
 							<p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-								Services
+								Location
 							</p>
 							<p className="mt-1 text-sm font-bold text-gray-900">
-								{agency.services?.length ?? 0}
+								{media.location || "Nigeria"}
+							</p>
+						</div>
+						<div className="rounded-xl bg-gray-50 p-4">
+							<p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+								Rates & Placements
+							</p>
+							<p className="mt-1 text-sm font-bold text-gray-900">
+								{pricingItems.length}
 							</p>
 						</div>
 					</div>
 
-					{agency.services?.length ? (
+					{media.contentCategory?.length ? (
+						<section className="rounded-xl border border-gray-100 p-4">
+							<h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">Content Categories</h3>
+							<div className="flex flex-wrap gap-2">
+								{media.contentCategory.map((cat) => (
+									<span key={cat} className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+										{formatLabel(cat)}
+									</span>
+								))}
+							</div>
+						</section>
+					) : null}
+
+					{media.audienceType?.length ? (
+						<section className="rounded-xl border border-gray-100 p-4">
+							<h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">Audience Types</h3>
+							<div className="flex flex-wrap gap-2">
+								{media.audienceType.map((aud) => (
+									<span key={aud} className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">
+										{formatLabel(aud)}
+									</span>
+								))}
+							</div>
+						</section>
+					) : null}
+
+					{pricingItems.length > 0 && (
 						<section className="rounded-xl border border-gray-100 p-4">
 							<div className="mb-3 flex items-center gap-2">
-								<Icon
-									icon="mdi:bullhorn-outline"
-									className="h-5 w-5 text-emerald-600"
-								/>
-								<h3 className="text-sm font-bold text-gray-950">
-									Services & Pricing
-								</h3>
+								<Icon icon="mdi:cash-multiple" className="h-5 w-5 text-emerald-600" />
+								<h3 className="text-sm font-bold text-gray-950">Standard Rates & Placements</h3>
 							</div>
-							<div className="space-y-2">
-								{agency.services.map((service) => (
-									<div
-										key={service.name}
-										className="rounded-lg bg-gray-50 px-3 py-2"
-									>
+							<div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+								{pricingItems.map((item, index) => (
+									<div key={`${item.label}-${index}`} className="rounded-lg bg-gray-50 px-4 py-3">
 										<div className="flex items-center justify-between gap-4">
-											<span className="text-sm font-medium text-gray-700">
-												{service.name}
-											</span>
-											<span className="text-sm font-bold text-gray-950">
-												{formatPriceValue(service.pricing)}
-											</span>
+											<div>
+												<p className="text-sm font-semibold text-gray-800">{item.label}</p>
+												{item.category && <p className="text-[10px] text-gray-400">{item.category}</p>}
+											</div>
+											<p className="text-sm font-bold text-gray-950">{formatPriceValue(item.price)}</p>
 										</div>
-										{service.description && (
-											<p className="mt-1 text-xs text-gray-400">
-												{service.description}
-											</p>
+										{item.description && (
+											<p className="mt-1 text-xs text-gray-500">{item.description}</p>
 										)}
 									</div>
 								))}
 							</div>
 						</section>
-					) : (
-						<p className="text-sm text-gray-400">No services entered yet.</p>
+					)}
+
+					{(media.website || media.companyEmail || media.companyPhone || media.contactPerson) && (
+						<section className="rounded-xl border border-gray-100 p-4">
+							<h3 className="mb-3 text-sm font-bold text-gray-950">Contact & Company Info</h3>
+							<div className="grid grid-cols-1 gap-2 sm:grid-cols-2 text-xs text-gray-700">
+								{media.website && (
+									<p><strong>Website:</strong> <a href={media.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 underline">{media.website}</a></p>
+								)}
+								{media.companyEmail && <p><strong>Email:</strong> {media.companyEmail}</p>}
+								{media.companyPhone && <p><strong>Phone:</strong> {media.companyPhone}</p>}
+								{media.contactPerson && <p><strong>Contact:</strong> {media.contactPerson} ({media.role || "Lead"})</p>}
+							</div>
+						</section>
 					)}
 
 					<a
 						href={whatsappUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
+						className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
 					>
 						<Icon icon="mdi:whatsapp" className="h-5 w-5" />
-						Enquire About PR Services
+						Enquire About Placements
 					</a>
 				</div>
 			</div>
@@ -151,47 +188,51 @@ const PrDetailModal = ({
 };
 
 const PRPage = () => {
-	const [agencies, setAgencies] = useState<PrAgency[]>([]);
-	const [selectedAgency, setSelectedAgency] = useState<PrAgency | null>(null);
+	const [mediaList, setMediaList] = useState<PrMedia[]>([]);
+	const [selectedMedia, setSelectedMedia] = useState<PrMedia | null>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState("");
 	const resultsRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const fetchAgencies = async () => {
+		const fetchMedia = async () => {
 			try {
 				setIsLoading(true);
-				const data = await sanity.fetch<PrAgency[]>(GET_PR_AGENCIES);
-				setAgencies(data || []);
+				const data = await sanity.fetch<PrMedia[]>(GET_PR_MEDIA);
+				setMediaList(data || []);
 			} catch (fetchError) {
 				console.error(fetchError);
-				setError("We could not load PR agencies right now.");
+				setError("We could not load PR & Media outlets right now.");
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
-		fetchAgencies();
+		fetchMedia();
 	}, []);
 
-	const filteredAgencies = useMemo(() => {
+	const filteredMedia = useMemo(() => {
 		const normalizedSearch = searchTerm.trim().toLowerCase();
-		if (!normalizedSearch) return agencies;
+		if (!normalizedSearch) return mediaList;
 
-		return agencies.filter((agency) =>
+		return mediaList.filter((item) =>
 			[
-				agency.name,
-				agency.category,
-				...(agency.coverage || []),
-				...(agency.services || []).map((s) => s.name),
+				item.name,
+				item.category,
+				item.location,
+				...(item.mediaCategories || []),
+				...(item.coverage || []),
+				...(item.contentCategory || []),
+				...(item.audienceType || []),
+				...getPrMediaPricingItems(item).map((p) => p.label),
 			]
 				.filter(Boolean)
 				.join(" ")
 				.toLowerCase()
 				.includes(normalizedSearch),
 		);
-	}, [searchTerm, agencies]);
+	}, [searchTerm, mediaList]);
 
 	const handleSearch = (value: string) => {
 		setSearchTerm(value);
@@ -208,23 +249,22 @@ const PRPage = () => {
 				<div className="relative z-10 mx-auto max-w-4xl space-y-8">
 					<div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-100 backdrop-blur-md">
 						<span className="flex h-2 w-2 rounded-full bg-green-400" />
-						PR media options
+						PR x Media Options
 					</div>
 
 					<h1 className="text-5xl font-extrabold tracking-tight md:text-7xl">
-						PR &amp; Agencies
+						PR &amp; Media Placements
 					</h1>
 
 					<p className="mx-auto max-w-2xl text-xl leading-relaxed text-emerald-100/90 md:text-2xl">
-						Amplify your brand voice through leading PR agencies and media campaigns
-						across Africa.
+						Publish rate cards, public notices, press releases and sponsored positions across top print and digital media agencies.
 					</p>
 
 					<div className="mx-auto mt-12 max-w-2xl">
 						<div className="relative">
 							<input
 								type="text"
-								placeholder="Search agencies, services or markets..."
+								placeholder="Search agencies, publications, positions or markets..."
 								className="w-full rounded-full bg-white py-5 pl-14 pr-12 text-lg text-gray-900 shadow-2xl transition focus:outline-none focus:ring-4 focus:ring-emerald-400/50"
 								value={searchTerm}
 								onChange={(event) => handleSearch(event.target.value)}
@@ -248,7 +288,7 @@ const PRPage = () => {
 
 					<div className="flex flex-wrap justify-center gap-3 text-sm">
 						<span className="text-emerald-200/70">Popular:</span>
-						{["Press Release", "Media Tour", "Event PR", "Crisis Management"].map(
+						{["Print", "Online News", "Public Notice", "Product Launch", "Politics"].map(
 							(tag) => (
 								<button
 									key={tag}
@@ -269,11 +309,11 @@ const PRPage = () => {
 			<main ref={resultsRef} className="mx-auto w-full max-w-7xl flex-1 px-6 py-12">
 				<div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
 					<div>
-						<p className="text-sm font-semibold text-emerald-600">PR &amp; Agencies</p>
+						<p className="text-sm font-semibold text-emerald-600">PR x Media Inventory</p>
 						<h2 className="text-2xl font-bold text-gray-900">
 							{isLoading
-								? "Loading agencies"
-								: `${filteredAgencies.length} agenc${filteredAgencies.length === 1 ? "y" : "ies"} found`}
+								? "Loading outlets"
+								: `${filteredMedia.length} outlet${filteredMedia.length === 1 ? "" : "s"} found`}
 						</h2>
 					</div>
 				</div>
@@ -290,82 +330,83 @@ const PRPage = () => {
 							<PrSkeleton key={index} />
 						))}
 					</div>
-				) : filteredAgencies.length === 0 ? (
+				) : filteredMedia.length === 0 ? (
 					<CategoryWaitlist
-						icon="mdi:bullhorn-outline"
-						title="No PR agencies available yet"
-						description="PR agency options will appear here once they are ready. You can still request a curated PR plan from the team."
+						icon="mdi:newspaper-variant-outline"
+						title="No PR x Media outlets available yet"
+						description="PR and media placements will appear here once they are ready. You can still request a curated PR plan from the team."
 						searchTerm={searchTerm}
 					/>
 				) : (
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-						{filteredAgencies.map((agency) => {
+						{filteredMedia.map((media) => {
 							const message = encodeURIComponent(
-								`Hi, I am interested in PR services from ${agency.name}`,
+								`Hi, I am interested in PR services from ${media.name}`,
 							);
 							const whatsappUrl = `https://wa.me/2347040925563?text=${message}`;
+							const pricingItems = getPrMediaPricingItems(media);
 
 							return (
 								<article
-									key={agency._id}
+									key={media._id}
 									className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
 								>
 									<div>
 										<div className="relative z-10 mb-4 flex items-start justify-between">
 											<div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white p-1 shadow-sm">
 												<Image
-													src={agency.logo || defaultLogo}
-													alt={agency.name}
+													src={media.logo || defaultLogo}
+													alt={media.name}
 													width={56}
 													height={56}
 													className="h-full w-full object-contain"
 												/>
 											</div>
-											{agency.category && (
+											{media.mediaCategories?.[0] && (
 												<span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
-													{formatLabel(agency.category)}
+													{formatLabel(media.mediaCategories[0])}
 												</span>
 											)}
 										</div>
 
 										<h3 className="relative z-10 mb-2 line-clamp-1 text-lg font-bold text-gray-900 transition group-hover:text-emerald-700">
-											{agency.name}
+											{media.name}
 										</h3>
 
 										<div className="relative z-10 mb-6 space-y-2 text-xs text-gray-500">
 											<p className="flex items-center gap-2">
 												<Icon icon="mdi:map-marker" className="h-4 w-4" />
-												{agency.coverage?.join(", ") || "Markets pending"}
+												{media.coverage?.join(", ") || media.location || "Circulation pending"}
 											</p>
 										</div>
 
 										<div className="relative z-10 mb-6 grid grid-cols-2 gap-2">
 											<div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
 												<p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-													Services
+													Placements
 												</p>
 												<p className="text-sm font-bold text-gray-800">
-													{agency.services?.length ?? 0}
+													{pricingItems.length}
 												</p>
 											</div>
 											<div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
 												<p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-													From
+													Price From
 												</p>
 												<p className="text-sm font-bold text-gray-800">
-													{formatPrLowestPrice(agency)}
+													{formatPrLowestPrice(media)}
 												</p>
 											</div>
 										</div>
 
-										{(agency.services || []).length > 0 && (
+										{pricingItems.length > 0 && (
 											<div className="relative z-10 mb-6 flex flex-wrap gap-2">
-												{(agency.services || []).slice(0, 3).map((service) => (
+												{pricingItems.slice(0, 3).map((item, i) => (
 													<span
-														key={service.name}
+														key={`${item.label}-${i}`}
 														className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700"
 													>
-														{service.name}
+														{item.label}
 													</span>
 												))}
 											</div>
@@ -374,11 +415,11 @@ const PRPage = () => {
 
 									<button
 										type="button"
-										onClick={() => setSelectedAgency(agency)}
+										onClick={() => setSelectedMedia(media)}
 										className="relative z-10 mb-3 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-800 transition hover:border-emerald-400 hover:text-emerald-700"
 									>
 										<Icon icon="mdi:table-eye" className="h-5 w-5" />
-										View services
+										View rate card &amp; services
 									</button>
 
 									<a
@@ -398,8 +439,8 @@ const PRPage = () => {
 			</main>
 
 			<PrDetailModal
-				agency={selectedAgency}
-				onClose={() => setSelectedAgency(null)}
+				media={selectedMedia}
+				onClose={() => setSelectedMedia(null)}
 			/>
 
 			<ListSpace />

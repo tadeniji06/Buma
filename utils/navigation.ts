@@ -39,27 +39,20 @@ export const categoryData = {
 		href: "/tv",
 		icon: "mdi:television-classic",
 		comingSoon: false,
-		description: "Television advertising across national, state and religious channels.",
+		description: "Television advertising across national, regional and commercial channels.",
 	},
-	News: {
-		title: "News & Media",
-		href: "/news",
+	PRMedia: {
+		title: "PR x Media",
+		href: "/pr",
 		icon: "mdi:newspaper-variant-outline",
 		comingSoon: false,
-		description: "Publish your content on top news sites, print and digital media.",
-	},
-	PR: {
-		title: "PR & Agencies",
-		href: "/pr",
-		icon: "mdi:bullhorn-outline",
-		comingSoon: false,
-		description: "PR services, press releases, media tours and brand campaigns.",
+		description: "Top PR agencies, newspapers, print, digital news outlets and wire placements.",
 	},
 	"Influencer Marketing": {
 		title: "Influencer Marketing",
 		href: "/influencers",
 		icon: "mdi:account-star",
 		comingSoon: false,
-		description: "Connect with top influencers to promote your brand.",
+		description: "Connect with top creators and influencers to promote your brand.",
 	},
 };

@@ -1,5 +1,7 @@
 export interface Pricing {
 	currency?: string;
+	price?: number;
+	basePrice?: number;
 	priceWithMarkup?: number;
 }
 
@@ -14,10 +16,20 @@ export interface RadioPricingItem {
 export interface RadioStation {
 	_id: string;
 	name: string;
+	frequency?: string;
 	logo?: string;
 	image?: string;
+	transmissionType?: string;
 	coverage?: string[];
 	programmes?: string[];
+	programmeType?: string[];
+	language?: string[];
+	location?: string;
+	mediaOwner?: string;
+	website?: string;
+	stationManager?: string;
+	contactPerson?: string;
+	role?: string;
 	listenership?: number;
 	spotAdvertPricing?: RadioPricingItem[];
 	announcementPricing?: RadioPricingItem[];
@@ -39,6 +51,13 @@ export interface Influencer {
 	_id: string;
 	name: string;
 	image?: string;
+	location?: string;
+	language?: string[];
+	contentCategory?: string[];
+	platform?: string[];
+	manager?: string;
+	managementTeam?: string;
+	managementEmail?: string;
 	postPricing?: InfluencerPricingItem[];
 	igFollowers?: string;
 	facebookFollowers?: string;
@@ -65,7 +84,16 @@ export interface TvStation {
 	name: string;
 	logo?: string;
 	category?: string;
-	viewership?: number;
+	transmissionType?: string;
+	advertType?: string[];
+	mediaOwner?: string;
+	ownershipGroup?: string;
+	website?: string;
+	stationManager?: string;
+	contactPerson?: string;
+	role?: string;
+	phoneNumber?: string;
+	email?: string;
 	programmes?: string[];
 	coverage?: string[];
 	runOfSpotPricing?: TvTimedPricingItem[];
@@ -76,35 +104,51 @@ export interface TvStation {
 	announcementPricing?: TvPlaceholderPricingItem[];
 }
 
-// News Outlet
-export interface NewsPlacementItem {
+// PR x Media
+export interface PrSpecialPositionItem {
+	position?: string;
+	description?: string;
+	pricing?: Pricing;
+}
+
+export interface PrCustomPackageItem {
 	name?: string;
 	description?: string;
 	pricing?: Pricing;
 }
 
-export interface NewsOutlet {
+export interface PrMedia {
 	_id: string;
 	name: string;
 	logo?: string;
+	mediaCategories?: string[];
+	coverage?: string[];
+	location?: string;
+	contentCategory?: string[];
+	audienceType?: string[];
+	publicNoticeBlackPricing?: Pricing;
+	productsColourPricing?: Pricing;
+	productsBlackPricing?: Pricing;
+	politicsColorPricing?: Pricing;
+	politicsBlackPricing?: Pricing;
+	allureRatePricing?: Pricing;
+	specialPositions?: PrSpecialPositionItem[];
+	customPackages?: PrCustomPackageItem[];
+	website?: string;
+	companyEmail?: string;
+	companyPhone?: string;
+	contactPerson?: string;
+	role?: string;
+
+	// Backwards compatibility aliases
 	category?: string;
+	services?: PrCustomPackageItem[];
+	placements?: PrCustomPackageItem[];
 	reach?: number;
-	coverage?: string[];
-	placements?: NewsPlacementItem[];
 }
 
-// PR Agency
-export interface PrServiceItem {
-	name?: string;
-	description?: string;
-	pricing?: Pricing;
-}
-
-export interface PrAgency {
-	_id: string;
-	name: string;
-	logo?: string;
-	category?: string;
-	coverage?: string[];
-	services?: PrServiceItem[];
-}
+// Legacy type aliases
+export type NewsPlacementItem = PrCustomPackageItem;
+export type NewsOutlet = PrMedia;
+export type PrServiceItem = PrCustomPackageItem;
+export type PrAgency = PrMedia;

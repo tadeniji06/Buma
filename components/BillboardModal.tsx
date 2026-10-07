@@ -22,7 +22,7 @@ const formatLabel = (value?: string) => {
 };
 
 const formatPrice = (billboard: Billboard) => {
-	const amount = billboard.pricing?.priceWithMarkup;
+	const amount = billboard.pricing?.price ?? billboard.pricing?.basePrice ?? billboard.pricing?.priceWithMarkup;
 
 	if (typeof amount !== "number") return "Request quote";
 
@@ -44,10 +44,11 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 		billboard.images?.length ? billboard.images : billboard.image ? [billboard.image] : [];
 	const imageSrc = galleryImages[activeImageIndex] || billboard.image || bbill;
 	const details = [
+		["Agency", billboard.agency || billboard.name],
 		["Display Type", formatLabel(billboard.displayType)],
 		["Billboard Size", formatLabel(billboard.billboardSize)],
 		["Dimensions", billboard.billboardDimensions || "Not specified"],
-		["Location", formatLabel(billboard.cityState)],
+		["Location", formatLabel(billboard.cityState || [billboard.city, billboard.state].filter(Boolean).join(", "))],
 		["Country", formatLabel(billboard.country)],
 		["Availability", formatLabel(billboard.availability)],
 		["Price", formatPrice(billboard)],
@@ -135,6 +136,17 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 							</div>
 						)}
 
+						{(billboard.contactPerson || billboard.companyEmail || billboard.companyPhone) && (
+							<div className='rounded-xl border border-gray-100 p-4'>
+								<h3 className='mb-2 text-sm font-bold text-gray-950'>Contact & Inquiries</h3>
+								<div className='space-y-1 text-xs text-gray-600'>
+									{billboard.contactPerson && <p><strong>Contact:</strong> {billboard.contactPerson}</p>}
+									{billboard.companyEmail && <p><strong>Email:</strong> {billboard.companyEmail}</p>}
+									{billboard.companyPhone && <p><strong>Phone:</strong> {billboard.companyPhone}</p>}
+								</div>
+							</div>
+						)}
+
 						<div className='rounded-xl border border-gray-100 p-4'>
 							<div className='mb-3 flex items-center gap-2'>
 								<Icon
@@ -147,7 +159,7 @@ const BillboardModal = ({ billboard, onClose }: BillboardModalProps) => {
 								<div className='rounded-lg bg-gray-50 p-3'>
 									<p className='text-xs text-gray-400'>Currency</p>
 									<p className='mt-1 text-sm font-bold text-gray-900'>
-										{billboard.pricing?.currency?.toUpperCase() || "N/A"}
+										{billboard.pricing?.currency?.toUpperCase() || "NGN"}
 									</p>
 								</div>
 								<div className='rounded-lg bg-gray-50 p-3'>

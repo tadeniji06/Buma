@@ -68,7 +68,7 @@ const RadioDetailModal = ({
 						</div>
 						<div>
 							<p className='text-xs font-bold uppercase tracking-[0.18em] text-primary-purple'>
-								Radio Station
+								{station.frequency || "Radio Station"}
 							</p>
 							<h2 className='mt-1 text-xl font-bold text-gray-950'>
 								{station.name}
@@ -100,7 +100,7 @@ const RadioDetailModal = ({
 								Coverage
 							</p>
 							<p className='mt-1 text-sm font-bold text-gray-900'>
-								{station.coverage?.join(", ") || "Not specified"}
+								{station.coverage?.join(", ") || station.location || "Not specified"}
 							</p>
 						</div>
 						<div className='rounded-xl bg-gray-50 p-4'>
@@ -112,6 +112,22 @@ const RadioDetailModal = ({
 							</p>
 						</div>
 					</div>
+
+					{station.programmeType?.length ? (
+						<section className='mb-5 rounded-xl border border-gray-100 p-4'>
+							<h3 className='mb-3 text-sm font-bold text-gray-950'>Programme Types</h3>
+							<div className='flex flex-wrap gap-2'>
+								{station.programmeType.map((type) => (
+									<span
+										key={type}
+										className='rounded-full bg-accent-purple px-3 py-1 text-xs font-semibold text-primary-purple'
+									>
+										{formatLabel(type)}
+									</span>
+								))}
+							</div>
+						</section>
+					) : null}
 
 					{station.programmes?.length ? (
 						<section className='mb-5 rounded-xl border border-gray-100 p-4'>
@@ -130,6 +146,34 @@ const RadioDetailModal = ({
 							</div>
 						</section>
 					) : null}
+
+					{(station.mediaOwner || station.website || station.contactPerson) && (
+						<section className='mb-5 rounded-xl border border-gray-100 p-4'>
+							<h3 className='mb-3 text-sm font-bold text-gray-950'>Station Contacts & Owner</h3>
+							<div className='grid grid-cols-1 gap-3 sm:grid-cols-2 text-xs'>
+								{station.mediaOwner && (
+									<div>
+										<span className='text-gray-400'>Media Owner: </span>
+										<span className='font-semibold text-gray-800'>{station.mediaOwner}</span>
+									</div>
+								)}
+								{station.website && (
+									<div>
+										<span className='text-gray-400'>Website: </span>
+										<a href={station.website} target='_blank' rel='noopener noreferrer' className='font-semibold text-primary-purple underline'>
+											{station.website}
+										</a>
+									</div>
+								)}
+								{station.contactPerson && (
+									<div>
+										<span className='text-gray-400'>Contact: </span>
+										<span className='font-semibold text-gray-800'>{station.contactPerson} ({station.role || "Manager"})</span>
+									</div>
+								)}
+							</div>
+						</section>
+					)}
 
 					<div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
 						{pricingGroups.map((group) => (
@@ -218,9 +262,13 @@ const RadioPage = () => {
 		return stations.filter((station) =>
 			[
 				station.name,
+				station.frequency,
+				station.location,
+				station.mediaOwner,
 				...(station.coverage || []),
 				...(station.programmes || []),
-				station.listenership?.toString(),
+				...(station.programmeType || []),
+				...(station.language || []),
 				...getRadioPricingGroups(station).flatMap((group) => [
 					group.title,
 					...group.items.map((item) => item.label),
@@ -259,7 +307,7 @@ const RadioPage = () => {
 					</h1>
 
 					<p className='mx-auto max-w-2xl text-xl leading-relaxed text-purple-100/90 md:text-2xl'>
-						Search live radio stations, coverage areas, programmes and rate
+						Search live radio stations, frequencies, coverage areas, programmes and rate
 						options for your campaign.
 					</p>
 
@@ -267,7 +315,7 @@ const RadioPage = () => {
 						<div className='relative'>
 							<input
 								type='text'
-								placeholder='Search stations, coverage or programmes...'
+								placeholder='Search stations, frequencies, coverage or programmes...'
 								className='w-full rounded-full bg-white py-5 pl-14 pr-12 text-lg text-gray-900 shadow-2xl transition focus:outline-none focus:ring-4 focus:ring-purple-400/50'
 								value={searchTerm}
 								onChange={(event) => handleSearch(event.target.value)}
@@ -334,7 +382,7 @@ const RadioPage = () => {
 				) : (
 					<div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
 						{filteredStations.map((station) => {
-							const coverage = station.coverage?.join(", ") || "Coverage pending";
+							const coverage = station.coverage?.join(", ") || station.location || "Coverage pending";
 							const programmes =
 								station.programmes?.join(", ") || "Programmes pending";
 							const message = encodeURIComponent(
@@ -358,6 +406,11 @@ const RadioPage = () => {
 													className='h-full w-full object-contain'
 												/>
 											</div>
+											{station.frequency && (
+												<span className='rounded-full bg-accent-purple px-3 py-1 text-xs font-bold text-primary-purple'>
+													{station.frequency}
+												</span>
+											)}
 										</div>
 
 										<h3 className='relative z-10 mb-2 line-clamp-1 text-lg font-bold text-gray-900 transition group-hover:text-primary-purple'>
@@ -378,15 +431,15 @@ const RadioPage = () => {
 										<div className='relative z-10 mb-6 grid grid-cols-2 gap-2'>
 											<div className='rounded-xl border border-gray-100 bg-gray-50 p-3'>
 												<p className='mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400'>
-													Listenership
+													Transmission
 												</p>
 												<p className='text-sm font-bold text-gray-800'>
-													{formatNumber(station.listenership)}
+													{formatLabel(station.transmissionType) || "FM Radio"}
 												</p>
 											</div>
 											<div className='rounded-xl border border-gray-100 bg-gray-50 p-3'>
 												<p className='mb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400'>
-													Price
+													Price From
 												</p>
 												<p className='text-sm font-bold text-gray-800'>
 													{formatRadioLowestPrice(station)}

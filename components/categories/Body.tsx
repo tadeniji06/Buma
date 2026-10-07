@@ -37,7 +37,7 @@ const formatLabel = (value?: string) => {
 };
 
 const formatPrice = (billboard: Billboard) => {
-	const amount = billboard.pricing?.priceWithMarkup;
+	const amount = billboard.pricing?.price ?? billboard.pricing?.basePrice ?? billboard.pricing?.priceWithMarkup;
 
 	if (typeof amount !== "number") return "Request quote";
 
