@@ -8,6 +8,7 @@ import NewsletterPopup from "@/components/NewsletterPopup";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { Toaster } from "sonner";
 import AnalyticsScript from "@/components/Analytics";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
 	title: "Buma | Africa's No.1 Media Buying Marketplace",
@@ -96,11 +97,14 @@ const organizationSchema = {
 	],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const hasSignedUp =
+		(await cookies()).get("newsletterSignedUp")?.value === "true";
+
 	return (
 		<html lang='en'>
 			<head>
@@ -124,7 +128,7 @@ export default function RootLayout({
 				<ClarityScript />
 				<AnalyticsScript />
 				<FloatingWhatsApp />
-				<NewsletterPopup />
+				<NewsletterPopup hasSignedUp={hasSignedUp} />
 				<Toaster richColors position='top-right' />
 			</body>
 		</html>
