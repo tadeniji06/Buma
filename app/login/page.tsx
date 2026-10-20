@@ -1,10 +1,5 @@
-import Login from "@/components/auth/Login";
+import { redirect } from "next/navigation";
 
-const page = () => {
-	return (
-		<div>
-			<Login />
-		</div>
-	);
-};
-export default page;
+export default function LoginPage() {
+	redirect("/");
+}

@@ -3,12 +3,14 @@ import "./globals.css";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import ClarityScript from "@/components/Clarity";
-import NewsletterPopup from "@/components/NewsletterPopup";
-
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { Toaster } from "sonner";
 import AnalyticsScript from "@/components/Analytics";
-import { cookies } from "next/headers";
+import AuthGate from "@/components/auth/AuthGate";
+import AccountControls from "@/components/auth/AccountControls";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
 	title: "Buma | Africa's No.1 Media Buying Marketplace",
@@ -102,8 +104,17 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const hasSignedUp =
-		(await cookies()).get("newsletterSignedUp")?.value === "true";
+	const supabaseConfigured = isSupabaseConfigured();
+	let user: { email?: string } | null = null;
+	let authError: string | null = null;
+
+	if (supabaseConfigured) {
+		const { data, error } = await (await createClient()).auth.getUser();
+		user = data.user;
+		if (error && error.name !== "AuthSessionMissingError") {
+			authError = "We couldn't verify your session. Please try again.";
+		}
+	}
 
 	return (
 		<html lang='en'>
@@ -122,13 +133,19 @@ export default async function RootLayout({
 				/>
 			</head>
 			<body className={`antialiased`}>
-				<Header />
-				{children}
-				<Footer />
+				{user && !authError ? (
+					<>
+						<Header />
+						<AccountControls email={user.email ?? ""} />
+						{children}
+						<Footer />
+						<FloatingWhatsApp />
+					</>
+				) : (
+					<AuthGate configured={supabaseConfigured} authError={authError} />
+				)}
 				<ClarityScript />
 				<AnalyticsScript />
-				<FloatingWhatsApp />
-				<NewsletterPopup hasSignedUp={hasSignedUp} />
 				<Toaster richColors position='top-right' />
 			</body>
 		</html>
